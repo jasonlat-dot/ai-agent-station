@@ -1,0 +1,10 @@
+# set( $JASYPT_ENCRYPTOR_PASSWORD = 'JASYPT_ENCRYPTOR_PASSWORD:default-password' )
+#file: noinspection SpringBootApplicationYaml
+spring:
+  profiles:
+    active: dev
+
+
+
+
+

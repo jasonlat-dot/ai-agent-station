@@ -1,0 +1,24 @@
+
+package com.jasonlat;
+
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.scheduling.annotation.EnableScheduling;
+
+
+@Slf4j
+@Configurable
+@EnableScheduling
+@SpringBootApplication
+@ComponentScan(basePackages = {"com.jasonlat", "cc.jq1024.middleware"})
+public class Application {
+
+    public static void main(String[] args){
+        SpringApplication.run(Application.class);
+        log.info("ai agent 项目开始启动...");
+    }
+
+}
