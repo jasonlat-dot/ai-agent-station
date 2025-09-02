@@ -32,23 +32,39 @@ thread:
 spring:
   # 数据库配置
   datasource:
-    host: 127.0.0.1
-    port: 16379
-    databaseName:
-    url: jdbc:mysql://${spring.datasource.host}:${spring.datasource.port}/${spring.datasource.databaseName}?useUnicode=true&characterEncoding=utf8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&serverTimezone=UTC&useSSL=false
-    username: root
+    username: jasonlat
     password: lijiaqiang12@
-    driver-class-name: com.mysql.cj.jdbc.Driver
-  hikari:
-    pool-name: Retail_HikariCP
-    minimum-idle: 15 #最小空闲连接数量
-    idle-timeout: 180000 #空闲连接存活最大时间，默认600000（10分钟）
-    maximum-pool-size: 25 #连接池最大连接数，默认是10
-    auto-commit: true  #此属性控制从池返回的连接的默认自动提交行为,默认值：true
-    max-lifetime: 1800000 #此属性控制池中连接的最长生命周期，值0表示无限生命周期，默认1800000即30分钟
-    connection-timeout: 30000 #数据库连接超时时间,默认30秒，即30000
-    connection-test-query: SELECT 1
-  type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:postgresql://127.0.0.1:15432/postgres
+    driver-class-name: org.postgresql.Driver
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      pool-name: Retail_HikariCP
+      minimum-idle: 15 #最小空闲连接数量
+      idle-timeout: 180000 #空闲连接存活最大时间，默认600000（10分钟）
+      maximum-pool-size: 25 #连接池最大连接数，默认是10
+      auto-commit: true  #此属性控制从池返回的连接的默认自动提交行为,默认值：true
+      max-lifetime: 1800000 #此属性控制池中连接的最长生命周期，值0表示无限生命周期，默认1800000即30分钟
+      connection-timeout: 30000 #数据库连接超时时间,默认30秒，即30000
+      connection-test-query: SELECT 1
+  ai:
+    openai:
+      base-url: https://dashscope.aliyuncs.com/compatible-mode  # qwen3
+      api-key: sk-382688e6c9184dea8715dfbfdb241355  # qwen3
+      chat:
+        options:
+          model: qwen-flash-2025-07-28
+    ollama:
+      base-url: http://127.0.0.1:11434
+      chat:
+        options:
+          model: qwen3:14B
+      embedding-model: nomic-embed-text
+      vector-table-name: vector_store_ollama_deepseek
+      # 向量模型
+      embedding:
+        options:
+          # 配置模型处理的批量大小，这里设置为512。表示模型一次可以处理 512 个文本片段的嵌入请求
+          num-batch: 768
 
   # Spring 配置；rabbitmq
   rabbitmq:
