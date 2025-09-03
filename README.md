@@ -190,17 +190,68 @@ spring:
     password: your_password
 ```
 
-## 📚 API文档
+## 🗄️ 数据库设计
 
-启动应用后，可以通过以下地址访问API文档：
-- Swagger UI: http://localhost:8080/swagger-ui.html
-- API Docs: http://localhost:8080/v3/api-docs
+### 📋 数据库文件说明
 
-## 📊 监控和日志
+项目的数据库相关文件位于 `dev-ops/mysql/` 目录下：
 
-### 📈 应用监控
-- Spring Boot Actuator提供健康检查和指标监控
-- 访问地址: http://localhost:8080/actuator
+#### 📄 核心文件
+- **[`ai-agent-station.sql`](dev-ops/mysql/ai-agent-station.sql)** - 数据库建表脚本
+  - 包含完整的数据库创建语句
+  - 支持 MySQL 8.0+ 版本
+  - 使用 utf8mb4 字符集
+  - 包含所有表结构、索引和约束定义
+
+- **[`sql.md`](dev-ops/mysql/sql.md)** - 数据库设计文档
+  - 详细的表结构说明
+  - 字段定义和约束说明
+  - 索引设计说明
+  - 业务逻辑说明
+
+#### 📊 ER图文件
+- **[`er-diagram.md`](dev-ops/mysql/er-diagram.md)** - Mermaid格式ER图
+  - 支持在GitHub、GitLab等平台直接渲染
+  - 可在线编辑：https://mermaid.live/
+  
+- **[`er-diagram.puml`](dev-ops/mysql/er-diagram.puml)** - PlantUML格式ER图
+  - 支持生成PNG、SVG、PDF等格式
+  - 在线渲染：http://www.plantuml.com/plantuml/
+  
+- **[`er-diagram.svg`](dev-ops/mysql/er-diagram.svg)** - SVG格式ER图
+  - 矢量图形，可无限缩放
+  - 直接在浏览器中查看
+
+### 🏗️ 数据库架构
+
+#### 🤖 AI智能体模块
+- `ai_agent` - AI智能体配置表
+- `ai_agent_flow_config` - 智能体-客户端关联表
+- `ai_agent_task_schedule` - 智能体任务调度配置表
+
+#### 💻 AI客户端模块
+- `ai_client` - AI客户端配置表
+- `ai_client_config` - AI客户端统一关联配置表
+- `ai_client_advisor` - AI客户端顾问配置表
+- `ai_client_api` - AI客户端API配置表
+- `ai_client_model` - AI客户端模型配置表
+- `ai_client_system_prompt` - AI客户端系统提示配置表
+- `ai_client_rag_order` - AI客户端RAG订单表
+- `ai_client_tool_mcp` - AI客户端MCP工具配置表
+
+### 🚀 数据库初始化
+
+1. **创建数据库**
+   ```sql
+   -- 执行建表脚本
+   source dev-ops/mysql/ai-agent-station.sql
+   ```
+
+2. **验证安装**
+   ```sql
+   USE ai_agent_station;
+   SHOW TABLES;
+   ```
 
 ### 📝 日志配置
 - 使用SLF4J + Logback进行日志管理

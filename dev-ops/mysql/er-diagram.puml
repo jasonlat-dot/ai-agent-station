@@ -1,0 +1,196 @@
+@startuml ai-agent-station-er-diagram
+!define ENTITY_COLOR #E1F5FE
+!define RELATION_COLOR #FFF3E0
+!define PRIMARY_KEY_COLOR #FFCDD2
+!define FOREIGN_KEY_COLOR #C8E6C9
+
+title 🤖 AI Agent Station 数据库 ER 图
+
+' 定义实体
+entity "🤖 ai_agent (AI代理)" as ai_agent {
+  * id : bigint(20) <<PK>> 🔑 主键ID
+  --
+  agent_id : varchar(64) 🆔 代理唯一标识
+  agent_name : varchar(128) 📝 代理名称
+  agent_desc : varchar(512) 📄 代理描述
+  agent_logo : varchar(512) 🖼️ 代理头像
+  status : tinyint(4) ⚡ 状态(0禁用/1启用)
+  creator : varchar(64) 👤 创建者
+  updater : varchar(64) 🔄 更新者
+  create_time : datetime ⏰ 创建时间
+  update_time : datetime 🔄 更新时间
+  deleted : tinyint(4) 🗑️ 删除标记(0正常/1删除)
+}
+
+entity "⚙️ ai_agent_flow_config (流程配置)" as ai_agent_flow_config {
+  * id : bigint(20) <<PK>> 🔑 主键ID
+  --
+  + agent_id : varchar(64) <<FK>> 🔗 代理ID
+  flow_name : varchar(128) 📝 流程名称
+  flow_desc : varchar(512) 📄 流程描述
+  flow_config : text 🔧 流程配置(JSON)
+  status : tinyint(4) ⚡ 状态(0禁用/1启用)
+  creator : varchar(64) 👤 创建者
+  updater : varchar(64) 🔄 更新者
+  create_time : datetime ⏰ 创建时间
+  update_time : datetime 🔄 更新时间
+  deleted : tinyint(4) 🗑️ 删除标记(0正常/1删除)
+}
+
+entity "⏰ ai_agent_task_schedule (任务调度)" as ai_agent_task_schedule {
+  * id : bigint(20) <<PK>> 🔑 主键ID
+  --
+  + agent_id : varchar(64) <<FK>> 🔗 代理ID
+  task_name : varchar(128) 📝 任务名称
+  task_desc : varchar(512) 📄 任务描述
+  cron_expression : varchar(128) ⏱️ Cron表达式
+  status : tinyint(4) ⚡ 状态(0禁用/1启用)
+  creator : varchar(64) 👤 创建者
+  updater : varchar(64) 🔄 更新者
+  create_time : datetime ⏰ 创建时间
+  update_time : datetime 🔄 更新时间
+  deleted : tinyint(4) 🗑️ 删除标记(0正常/1删除)
+}
+
+entity "💻 ai_client (AI客户端)" as ai_client {
+  * id : bigint(20) <<PK>> 🔑 主键ID
+  --
+  client_id : varchar(64) 🆔 客户端唯一标识
+  client_name : varchar(128) 📝 客户端名称
+  client_desc : varchar(512) 📄 客户端描述
+  channel : varchar(32) 📡 渠道类型
+  status : tinyint(4) ⚡ 状态(0禁用/1启用)
+  creator : varchar(64) 👤 创建者
+  updater : varchar(64) 🔄 更新者
+  create_time : datetime ⏰ 创建时间
+  update_time : datetime 🔄 更新时间
+  deleted : tinyint(4) 🗑️ 删除标记(0正常/1删除)
+}
+
+entity "🔧 ai_client_config (客户端配置)" as ai_client_config {
+  * id : bigint(20) <<PK>> 🔑 主键ID
+  --
+  + client_id : varchar(64) <<FK>> 🔗 客户端ID
+  config_key : varchar(128) 🔑 配置键
+  config_value : text 💾 配置值
+  config_desc : varchar(512) 📄 配置描述
+  status : tinyint(4) ⚡ 状态(0禁用/1启用)
+  creator : varchar(64) 👤 创建者
+  updater : varchar(64) 🔄 更新者
+  create_time : datetime ⏰ 创建时间
+  update_time : datetime 🔄 更新时间
+  deleted : tinyint(4) 🗑️ 删除标记(0正常/1删除)
+}
+
+entity "🌐 ai_client_api (客户端API)" as ai_client_api {
+  * id : bigint(20) <<PK>> 🔑 主键ID
+  --
+  + client_id : varchar(64) <<FK>> 🔗 客户端ID
+  api_name : varchar(128) 📝 API名称
+  api_url : varchar(512) 🌐 API地址
+  api_method : varchar(16) 🔧 请求方法
+  api_headers : text 📋 请求头(JSON)
+  api_params : text 📝 请求参数(JSON)
+  status : tinyint(4) ⚡ 状态(0禁用/1启用)
+  creator : varchar(64) 👤 创建者
+  updater : varchar(64) 🔄 更新者
+  create_time : datetime ⏰ 创建时间
+  update_time : datetime 🔄 更新时间
+  deleted : tinyint(4) 🗑️ 删除标记(0正常/1删除)
+}
+
+entity "🧠 ai_client_model (客户端模型)" as ai_client_model {
+  * id : bigint(20) <<PK>> 🔑 主键ID
+  --
+  + client_id : varchar(64) <<FK>> 🔗 客户端ID
+  model_name : varchar(128) 📝 模型名称
+  model_type : varchar(64) 🤖 模型类型
+  model_config : text ⚙️ 模型配置(JSON)
+  status : tinyint(4) ⚡ 状态(0禁用/1启用)
+  creator : varchar(64) 👤 创建者
+  updater : varchar(64) 🔄 更新者
+  create_time : datetime ⏰ 创建时间
+  update_time : datetime 🔄 更新时间
+  deleted : tinyint(4) 🗑️ 删除标记(0正常/1删除)
+}
+
+entity "👨‍💼 ai_client_advisor (客户端顾问)" as ai_client_advisor {
+  * id : bigint(20) <<PK>> 🔑 主键ID
+  --
+  + client_id : varchar(64) <<FK>> 🔗 客户端ID
+  advisor_name : varchar(128) 📝 顾问名称
+  advisor_type : varchar(64) 👔 顾问类型
+  advisor_config : text 📋 顾问配置(JSON)
+  status : tinyint(4) ⚡ 状态(0禁用/1启用)
+  creator : varchar(64) 👤 创建者
+  updater : varchar(64) 🔄 更新者
+  create_time : datetime ⏰ 创建时间
+  update_time : datetime 🔄 更新时间
+  deleted : tinyint(4) 🗑️ 删除标记(0正常/1删除)
+}
+
+entity "💬 ai_client_system_prompt (系统提示)" as ai_client_system_prompt {
+  * id : bigint(20) <<PK>> 🔑 主键ID
+  --
+  + client_id : varchar(64) <<FK>> 🔗 客户端ID
+  prompt_name : varchar(128) 📝 提示名称
+  prompt_content : text 💭 提示内容
+  prompt_type : varchar(64) 🏷️ 提示类型
+  status : tinyint(4) ⚡ 状态(0禁用/1启用)
+  creator : varchar(64) 👤 创建者
+  updater : varchar(64) 🔄 更新者
+  create_time : datetime ⏰ 创建时间
+  update_time : datetime 🔄 更新时间
+  deleted : tinyint(4) 🗑️ 删除标记(0正常/1删除)
+}
+
+entity "📚 ai_client_rag_order (RAG订单)" as ai_client_rag_order {
+  * id : bigint(20) <<PK>> 🔑 主键ID
+  --
+  + client_id : varchar(64) <<FK>> 🔗 客户端ID
+  order_id : varchar(64) 🆔 订单ID
+  order_content : text 📄 订单内容
+  order_status : varchar(32) 📊 订单状态
+  rag_config : text 🔧 RAG配置(JSON)
+  creator : varchar(64) 👤 创建者
+  updater : varchar(64) 🔄 更新者
+  create_time : datetime ⏰ 创建时间
+  update_time : datetime 🔄 更新时间
+  deleted : tinyint(4) 🗑️ 删除标记(0正常/1删除)
+}
+
+entity "🛠️ ai_client_tool_mcp (MCP工具)" as ai_client_tool_mcp {
+  * id : bigint(20) <<PK>> 🔑 主键ID
+  --
+  + client_id : varchar(64) <<FK>> 🔗 客户端ID
+  tool_name : varchar(128) 📝 工具名称
+  tool_type : varchar(64) 🔧 工具类型
+  tool_config : text ⚙️ 工具配置(JSON)
+  transport_type : varchar(32) 🚚 传输类型
+  status : tinyint(4) ⚡ 状态(0禁用/1启用)
+  creator : varchar(64) 👤 创建者
+  updater : varchar(64) 🔄 更新者
+  create_time : datetime ⏰ 创建时间
+  update_time : datetime 🔄 更新时间
+  deleted : tinyint(4) 🗑️ 删除标记(0正常/1删除)
+}
+
+' 定义关系
+ai_agent ||--o{ ai_agent_flow_config : "一对多"
+ai_agent ||--o{ ai_agent_task_schedule : "一对多"
+
+ai_client ||--o{ ai_client_config : "一对多"
+ai_client ||--o{ ai_client_api : "一对多"
+ai_client ||--o{ ai_client_model : "一对多"
+ai_client ||--o{ ai_client_advisor : "一对多"
+ai_client ||--o{ ai_client_system_prompt : "一对多"
+ai_client ||--o{ ai_client_rag_order : "一对多"
+ai_client ||--o{ ai_client_tool_mcp : "一对多"
+
+' 添加注释
+note top of ai_agent : 🤖 AI代理核心表\n管理所有AI代理的基本信息
+note top of ai_client : 💻 AI客户端核心表\n管理所有客户端的基本信息
+
+note bottom : 📝 **设计说明**\n• 🔑 所有表都有统一的主键设计\n• 🗑️ 支持软删除机制(deleted字段)\n• 👤 记录操作人员信息(creator/updater)\n• ⏰ 完整的时间戳记录\n• 🔧 使用JSON存储复杂配置信息\n• 📊 统一的状态管理(0禁用/1启用)
+
+@enduml

@@ -1,0 +1,307 @@
+<svg width="1800" height="1600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .table-box { fill: #f8f9fa; stroke: #343a40; stroke-width: 2; }
+      .table-header { fill: #007bff; }
+      .table-title { fill: white; font-family: Arial, sans-serif; font-size: 14px; font-weight: bold; text-anchor: middle; }
+      .field-text { fill: #343a40; font-family: Arial, sans-serif; font-size: 11px; }
+      .pk-field { fill: #dc3545; font-weight: bold; }
+      .fk-field { fill: #28a745; }
+      .relation-line { stroke: #6c757d; stroke-width: 2; fill: none; }
+      .relation-arrow { fill: #6c757d; }
+    </style>
+  </defs>
+  
+  <!-- Title -->
+  <text x="900" y="30" class="table-title" style="font-size: 20px; fill: #343a40;">🤖 AI Agent Station 数据库 ER 图 (Mermaid)</text>
+  
+  <!-- ai_agent table -->
+  <g id="ai_agent">
+    <rect x="50" y="80" width="300" height="240" class="table-box"/>
+    <rect x="50" y="80" width="300" height="30" class="table-header"/>
+    <text x="200" y="100" class="table-title">🤖 ai_agent (AI代理)</text>
+    <text x="60" y="125" class="field-text pk-field">🔑 id : bigint(20) - 主键ID</text>
+    <text x="60" y="140" class="field-text">🆔 agent_id : varchar(64) - 代理唯一标识</text>
+    <text x="60" y="155" class="field-text">📝 agent_name : varchar(128) - 代理名称</text>
+    <text x="60" y="170" class="field-text">📄 agent_desc : varchar(512) - 代理描述</text>
+    <text x="60" y="185" class="field-text">🖼️ agent_logo : varchar(512) - 代理头像</text>
+    <text x="60" y="200" class="field-text">⚡ status : tinyint(4) - 状态(0禁用/1启用)</text>
+    <text x="60" y="215" class="field-text">👤 creator : varchar(64) - 创建者</text>
+    <text x="60" y="230" class="field-text">🔄 updater : varchar(64) - 更新者</text>
+    <text x="60" y="245" class="field-text">⏰ create_time : datetime - 创建时间</text>
+    <text x="60" y="260" class="field-text">🔄 update_time : datetime - 更新时间</text>
+    <text x="60" y="275" class="field-text">🗑️ deleted : tinyint(4) - 删除标记(0正常/1删除)</text>
+  </g>
+  
+  <!-- ai_agent_flow_config table -->
+  <g id="ai_agent_flow_config">
+    <rect x="400" y="80" width="320" height="240" class="table-box"/>
+    <rect x="400" y="80" width="320" height="30" class="table-header"/>
+    <text x="560" y="100" class="table-title">⚙️ ai_agent_flow_config (流程配置)</text>
+    <text x="410" y="125" class="field-text pk-field">🔑 id : bigint(20) - 主键ID</text>
+    <text x="410" y="140" class="field-text fk-field">🔗 agent_id : varchar(64) - 代理ID</text>
+    <text x="410" y="155" class="field-text">📝 flow_name : varchar(128) - 流程名称</text>
+    <text x="410" y="170" class="field-text">📄 flow_desc : varchar(512) - 流程描述</text>
+    <text x="410" y="185" class="field-text">🔧 flow_config : text - 流程配置(JSON)</text>
+    <text x="410" y="200" class="field-text">⚡ status : tinyint(4) - 状态(0禁用/1启用)</text>
+    <text x="410" y="215" class="field-text">👤 creator : varchar(64) - 创建者</text>
+    <text x="410" y="230" class="field-text">🔄 updater : varchar(64) - 更新者</text>
+    <text x="410" y="245" class="field-text">⏰ create_time : datetime - 创建时间</text>
+    <text x="410" y="260" class="field-text">🔄 update_time : datetime - 更新时间</text>
+    <text x="410" y="275" class="field-text">🗑️ deleted : tinyint(4) - 删除标记(0正常/1删除)</text>
+  </g>
+  
+  <!-- ai_agent_task_schedule table -->
+  <g id="ai_agent_task_schedule">
+    <rect x="50" y="350" width="300" height="240" class="table-box"/>
+    <rect x="50" y="350" width="300" height="30" class="table-header"/>
+    <text x="200" y="370" class="table-title">⏰ ai_agent_task_schedule (任务调度)</text>
+    <text x="60" y="395" class="field-text pk-field">🔑 id : bigint(20) - 主键ID</text>
+    <text x="60" y="410" class="field-text fk-field">🔗 agent_id : varchar(64) - 代理ID</text>
+    <text x="60" y="425" class="field-text">📝 task_name : varchar(128) - 任务名称</text>
+    <text x="60" y="440" class="field-text">📄 task_desc : varchar(512) - 任务描述</text>
+    <text x="60" y="455" class="field-text">⏱️ cron_expression : varchar(128) - Cron表达式</text>
+    <text x="60" y="470" class="field-text">⚡ status : tinyint(4) - 状态(0禁用/1启用)</text>
+    <text x="60" y="485" class="field-text">👤 creator : varchar(64) - 创建者</text>
+    <text x="60" y="500" class="field-text">🔄 updater : varchar(64) - 更新者</text>
+    <text x="60" y="515" class="field-text">⏰ create_time : datetime - 创建时间</text>
+    <text x="60" y="530" class="field-text">🔄 update_time : datetime - 更新时间</text>
+    <text x="60" y="545" class="field-text">🗑️ deleted : tinyint(4) - 删除标记(0正常/1删除)</text>
+  </g>
+  
+  <!-- ai_client table -->
+  <g id="ai_client">
+    <rect x="770" y="80" width="300" height="240" class="table-box"/>
+    <rect x="770" y="80" width="300" height="30" class="table-header"/>
+    <text x="920" y="100" class="table-title">💻 ai_client (AI客户端)</text>
+    <text x="780" y="125" class="field-text pk-field">🔑 id : bigint(20) - 主键ID</text>
+    <text x="780" y="140" class="field-text">🆔 client_id : varchar(64) - 客户端唯一标识</text>
+    <text x="780" y="155" class="field-text">📝 client_name : varchar(128) - 客户端名称</text>
+    <text x="780" y="170" class="field-text">📄 client_desc : varchar(512) - 客户端描述</text>
+    <text x="780" y="185" class="field-text">📡 channel : varchar(32) - 渠道类型</text>
+    <text x="780" y="200" class="field-text">⚡ status : tinyint(4) - 状态(0禁用/1启用)</text>
+    <text x="780" y="215" class="field-text">👤 creator : varchar(64) - 创建者</text>
+    <text x="780" y="230" class="field-text">🔄 updater : varchar(64) - 更新者</text>
+    <text x="780" y="245" class="field-text">⏰ create_time : datetime - 创建时间</text>
+    <text x="780" y="260" class="field-text">🔄 update_time : datetime - 更新时间</text>
+    <text x="780" y="275" class="field-text">🗑️ deleted : tinyint(4) - 删除标记(0正常/1删除)</text>
+  </g>
+  
+  <!-- ai_client_config table -->
+  <g id="ai_client_config">
+    <rect x="1120" y="80" width="320" height="240" class="table-box"/>
+    <rect x="1120" y="80" width="320" height="30" class="table-header"/>
+    <text x="1280" y="100" class="table-title">🔧 ai_client_config (客户端配置)</text>
+    <text x="1130" y="125" class="field-text pk-field">🔑 id : bigint(20) - 主键ID</text>
+    <text x="1130" y="140" class="field-text fk-field">🔗 client_id : varchar(64) - 客户端ID</text>
+    <text x="1130" y="155" class="field-text">🔑 config_key : varchar(128) - 配置键</text>
+    <text x="1130" y="170" class="field-text">💾 config_value : text - 配置值</text>
+    <text x="1130" y="185" class="field-text">📄 config_desc : varchar(512) - 配置描述</text>
+    <text x="1130" y="200" class="field-text">⚡ status : tinyint(4) - 状态(0禁用/1启用)</text>
+    <text x="1130" y="215" class="field-text">👤 creator : varchar(64) - 创建者</text>
+    <text x="1130" y="230" class="field-text">🔄 updater : varchar(64) - 更新者</text>
+    <text x="1130" y="245" class="field-text">⏰ create_time : datetime - 创建时间</text>
+    <text x="1130" y="260" class="field-text">🔄 update_time : datetime - 更新时间</text>
+    <text x="1130" y="275" class="field-text">🗑️ deleted : tinyint(4) - 删除标记(0正常/1删除)</text>
+  </g>
+  
+  <!-- ai_client_api table -->
+  <g id="ai_client_api">
+    <rect x="400" y="350" width="320" height="240" class="table-box"/>
+    <rect x="400" y="350" width="320" height="30" class="table-header"/>
+    <text x="560" y="370" class="table-title">🌐 ai_client_api (客户端API)</text>
+    <text x="410" y="395" class="field-text pk-field">🔑 id : bigint(20) - 主键ID</text>
+    <text x="410" y="410" class="field-text fk-field">🔗 client_id : varchar(64) - 客户端ID</text>
+    <text x="410" y="425" class="field-text">📝 api_name : varchar(128) - API名称</text>
+    <text x="410" y="440" class="field-text">🌐 api_url : varchar(512) - API地址</text>
+    <text x="410" y="455" class="field-text">🔧 api_method : varchar(16) - 请求方法</text>
+    <text x="410" y="470" class="field-text">📋 api_headers : text - 请求头(JSON)</text>
+    <text x="410" y="485" class="field-text">📝 api_params : text - 请求参数(JSON)</text>
+    <text x="410" y="500" class="field-text">⚡ status : tinyint(4) - 状态(0禁用/1启用)</text>
+    <text x="410" y="515" class="field-text">👤 creator : varchar(64) - 创建者</text>
+    <text x="410" y="530" class="field-text">🔄 updater : varchar(64) - 更新者</text>
+    <text x="410" y="545" class="field-text">⏰ create_time : datetime - 创建时间</text>
+    <text x="410" y="560" class="field-text">🔄 update_time : datetime - 更新时间</text>
+    <text x="410" y="575" class="field-text">🗑️ deleted : tinyint(4) - 删除标记(0正常/1删除)</text>
+  </g>
+  
+  <!-- ai_client_model table -->
+  <g id="ai_client_model">
+    <rect x="770" y="350" width="300" height="240" class="table-box"/>
+    <rect x="770" y="350" width="300" height="30" class="table-header"/>
+    <text x="920" y="370" class="table-title">🧠 ai_client_model (客户端模型)</text>
+    <text x="780" y="395" class="field-text pk-field">🔑 id : bigint(20) - 主键ID</text>
+    <text x="780" y="410" class="field-text fk-field">🔗 client_id : varchar(64) - 客户端ID</text>
+    <text x="780" y="425" class="field-text">📝 model_name : varchar(128) - 模型名称</text>
+    <text x="780" y="440" class="field-text">🤖 model_type : varchar(64) - 模型类型</text>
+    <text x="780" y="455" class="field-text">⚙️ model_config : text - 模型配置(JSON)</text>
+    <text x="780" y="470" class="field-text">⚡ status : tinyint(4) - 状态(0禁用/1启用)</text>
+    <text x="780" y="485" class="field-text">👤 creator : varchar(64) - 创建者</text>
+    <text x="780" y="500" class="field-text">🔄 updater : varchar(64) - 更新者</text>
+    <text x="780" y="515" class="field-text">⏰ create_time : datetime - 创建时间</text>
+    <text x="780" y="530" class="field-text">🔄 update_time : datetime - 更新时间</text>
+    <text x="780" y="545" class="field-text">🗑️ deleted : tinyint(4) - 删除标记(0正常/1删除)</text>
+  </g>
+  
+  <!-- ai_client_advisor table -->
+  <g id="ai_client_advisor">
+    <rect x="1120" y="350" width="320" height="240" class="table-box"/>
+    <rect x="1120" y="350" width="320" height="30" class="table-header"/>
+    <text x="1280" y="370" class="table-title">👨‍💼 ai_client_advisor (客户端顾问)</text>
+    <text x="1130" y="395" class="field-text pk-field">🔑 id : bigint(20) - 主键ID</text>
+    <text x="1130" y="410" class="field-text fk-field">🔗 client_id : varchar(64) - 客户端ID</text>
+    <text x="1130" y="425" class="field-text">📝 advisor_name : varchar(128) - 顾问名称</text>
+    <text x="1130" y="440" class="field-text">👔 advisor_type : varchar(64) - 顾问类型</text>
+    <text x="1130" y="455" class="field-text">📋 advisor_config : text - 顾问配置(JSON)</text>
+    <text x="1130" y="470" class="field-text">⚡ status : tinyint(4) - 状态(0禁用/1启用)</text>
+    <text x="1130" y="485" class="field-text">👤 creator : varchar(64) - 创建者</text>
+    <text x="1130" y="500" class="field-text">🔄 updater : varchar(64) - 更新者</text>
+    <text x="1130" y="515" class="field-text">⏰ create_time : datetime - 创建时间</text>
+    <text x="1130" y="530" class="field-text">🔄 update_time : datetime - 更新时间</text>
+    <text x="1130" y="545" class="field-text">🗑️ deleted : tinyint(4) - 删除标记(0正常/1删除)</text>
+  </g>
+  
+  <!-- ai_client_system_prompt table -->
+  <g id="ai_client_system_prompt">
+    <rect x="50" y="620" width="320" height="240" class="table-box"/>
+    <rect x="50" y="620" width="320" height="30" class="table-header"/>
+    <text x="210" y="640" class="table-title">💬 ai_client_system_prompt (系统提示)</text>
+    <text x="60" y="665" class="field-text pk-field">🔑 id : bigint(20) - 主键ID</text>
+    <text x="60" y="680" class="field-text fk-field">🔗 client_id : varchar(64) - 客户端ID</text>
+    <text x="60" y="695" class="field-text">📝 prompt_name : varchar(128) - 提示名称</text>
+    <text x="60" y="710" class="field-text">💭 prompt_content : text - 提示内容</text>
+    <text x="60" y="725" class="field-text">🏷️ prompt_type : varchar(64) - 提示类型</text>
+    <text x="60" y="740" class="field-text">⚡ status : tinyint(4) - 状态(0禁用/1启用)</text>
+    <text x="60" y="755" class="field-text">👤 creator : varchar(64) - 创建者</text>
+    <text x="60" y="770" class="field-text">🔄 updater : varchar(64) - 更新者</text>
+    <text x="60" y="785" class="field-text">⏰ create_time : datetime - 创建时间</text>
+    <text x="60" y="800" class="field-text">🔄 update_time : datetime - 更新时间</text>
+    <text x="60" y="815" class="field-text">🗑️ deleted : tinyint(4) - 删除标记(0正常/1删除)</text>
+  </g>
+  
+  <!-- ai_client_rag_order table -->
+  <g id="ai_client_rag_order">
+    <rect x="420" y="620" width="300" height="220" class="table-box"/>
+    <rect x="420" y="620" width="300" height="30" class="table-header"/>
+    <text x="570" y="640" class="table-title">📚 ai_client_rag_order (RAG订单)</text>
+    <text x="430" y="665" class="field-text pk-field">🔑 id : bigint(20) - 主键ID</text>
+    <text x="430" y="680" class="field-text fk-field">🔗 client_id : varchar(64) - 客户端ID</text>
+    <text x="430" y="695" class="field-text">🆔 order_id : varchar(64) - 订单ID</text>
+    <text x="430" y="710" class="field-text">📄 order_content : text - 订单内容</text>
+    <text x="430" y="725" class="field-text">📊 order_status : varchar(32) - 订单状态</text>
+    <text x="430" y="740" class="field-text">🔧 rag_config : text - RAG配置(JSON)</text>
+    <text x="430" y="755" class="field-text">👤 creator : varchar(64) - 创建者</text>
+    <text x="430" y="770" class="field-text">🔄 updater : varchar(64) - 更新者</text>
+    <text x="430" y="785" class="field-text">⏰ create_time : datetime - 创建时间</text>
+    <text x="430" y="800" class="field-text">🔄 update_time : datetime - 更新时间</text>
+    <text x="430" y="815" class="field-text">🗑️ deleted : tinyint(4) - 删除标记(0正常/1删除)</text>
+  </g>
+  
+  <!-- ai_client_tool_mcp table -->
+  <g id="ai_client_tool_mcp">
+    <rect x="770" y="620" width="320" height="240" class="table-box"/>
+    <rect x="770" y="620" width="320" height="30" class="table-header"/>
+    <text x="930" y="640" class="table-title">🛠️ ai_client_tool_mcp (MCP工具)</text>
+    <text x="780" y="665" class="field-text pk-field">🔑 id : bigint(20) - 主键ID</text>
+    <text x="780" y="680" class="field-text fk-field">🔗 client_id : varchar(64) - 客户端ID</text>
+    <text x="780" y="695" class="field-text">📝 tool_name : varchar(128) - 工具名称</text>
+    <text x="780" y="710" class="field-text">🔧 tool_type : varchar(64) - 工具类型</text>
+    <text x="780" y="725" class="field-text">⚙️ tool_config : text - 工具配置(JSON)</text>
+    <text x="780" y="740" class="field-text">🚚 transport_type : varchar(32) - 传输类型</text>
+    <text x="780" y="755" class="field-text">⚡ status : tinyint(4) - 状态(0禁用/1启用)</text>
+    <text x="780" y="770" class="field-text">👤 creator : varchar(64) - 创建者</text>
+    <text x="780" y="785" class="field-text">🔄 updater : varchar(64) - 更新者</text>
+    <text x="780" y="800" class="field-text">⏰ create_time : datetime - 创建时间</text>
+    <text x="780" y="815" class="field-text">🔄 update_time : datetime - 更新时间</text>
+    <text x="780" y="830" class="field-text">🗑️ deleted : tinyint(4) - 删除标记(0正常/1删除)</text>
+  </g>
+  
+  <!-- Relationships -->
+  
+  <!-- ai_agent to ai_agent_flow_config -->
+  <line x1="350" y1="200" x2="400" y2="200" class="relation-line"/>
+  <polygon points="395,195 405,200 395,205" class="relation-arrow"/>
+  <text x="375" y="195" class="field-text" style="font-size: 10px;">1:N</text>
+  
+  <!-- ai_agent to ai_agent_task_schedule -->
+  <line x1="200" y1="320" x2="200" y2="350" class="relation-line"/>
+  <polygon points="195,345 200,355 205,345" class="relation-arrow"/>
+  <text x="210" y="335" class="field-text" style="font-size: 10px;">1:N</text>
+  
+  <!-- ai_client to ai_client_config -->
+  <line x1="1070" y1="200" x2="1120" y2="200" class="relation-line"/>
+  <polygon points="1115,195 1125,200 1115,205" class="relation-arrow"/>
+  <text x="1095" y="195" class="field-text" style="font-size: 10px;">1:N</text>
+  
+  <!-- ai_client to ai_client_api -->
+  <line x1="920" y1="320" x2="920" y2="350" class="relation-line"/>
+  <line x1="920" y1="350" x2="720" y2="350" class="relation-line"/>
+  <line x1="720" y1="350" x2="720" y2="470" class="relation-line"/>
+  <polygon points="715,465 720,475 725,465" class="relation-arrow"/>
+  <text x="730" y="465" class="field-text" style="font-size: 10px;">1:N</text>
+  
+  <!-- ai_client to ai_client_model -->
+  <line x1="920" y1="320" x2="920" y2="350" class="relation-line"/>
+  <polygon points="915,345 920,355 925,345" class="relation-arrow"/>
+  <text x="930" y="335" class="field-text" style="font-size: 10px;">1:N</text>
+  
+  <!-- ai_client to ai_client_advisor -->
+  <line x1="1070" y1="200" x2="1280" y2="200" class="relation-line"/>
+  <line x1="1280" y1="200" x2="1280" y2="350" class="relation-line"/>
+  <polygon points="1275,345 1280,355 1285,345" class="relation-arrow"/>
+  <text x="1290" y="275" class="field-text" style="font-size: 10px;">1:N</text>
+  
+  <!-- ai_client to ai_client_system_prompt -->
+  <line x1="920" y1="320" x2="920" y2="600" class="relation-line"/>
+  <line x1="920" y1="600" x2="210" y2="600" class="relation-line"/>
+  <line x1="210" y1="600" x2="210" y2="620" class="relation-line"/>
+  <polygon points="205,615 210,625 215,615" class="relation-arrow"/>
+  <text x="220" y="615" class="field-text" style="font-size: 10px;">1:N</text>
+  
+  <!-- ai_client to ai_client_rag_order -->
+  <line x1="920" y1="320" x2="920" y2="600" class="relation-line"/>
+  <line x1="920" y1="600" x2="570" y2="600" class="relation-line"/>
+  <line x1="570" y1="600" x2="570" y2="620" class="relation-line"/>
+  <polygon points="565,615 570,625 575,615" class="relation-arrow"/>
+  <text x="580" y="615" class="field-text" style="font-size: 10px;">1:N</text>
+  
+  <!-- ai_client to ai_client_tool_mcp -->
+  <line x1="920" y1="320" x2="920" y2="600" class="relation-line"/>
+  <line x1="920" y1="600" x2="930" y2="600" class="relation-line"/>
+  <line x1="930" y1="600" x2="930" y2="620" class="relation-line"/>
+  <polygon points="925,615 930,625 935,615" class="relation-arrow"/>
+  <text x="940" y="615" class="field-text" style="font-size: 10px;">1:N</text>
+  
+  <!-- Legend -->
+  <g id="legend">
+    <rect x="50" y="900" width="350" height="180" fill="#f8f9fa" stroke="#343a40" stroke-width="1"/>
+    <text x="225" y="920" class="table-title" style="fill: #343a40;">📖 图例说明</text>
+    
+    <text x="60" y="945" class="field-text pk-field">🔑 PK - 主键 (Primary Key)</text>
+    <text x="60" y="965" class="field-text fk-field">🔗 FK - 外键 (Foreign Key)</text>
+    <text x="60" y="985" class="field-text">UK - 唯一键 (Unique Key)</text>
+    
+    <line x1="60" y1="1005" x2="100" y2="1005" class="relation-line"/>
+    <polygon points="95,1000 105,1005 95,1010" class="relation-arrow"/>
+    <text x="110" y="1010" class="field-text">表关系连线</text>
+    
+    <text x="60" y="1030" class="field-text" style="font-size: 10px;">1:1 - 一对一关系</text>
+    <text x="60" y="1045" class="field-text" style="font-size: 10px;">1:N - 一对多关系</text>
+    <text x="60" y="1060" class="field-text" style="font-size: 10px;">N:1 - 多对一关系</text>
+  </g>
+  
+  <!-- Notes -->
+  <g id="notes">
+    <rect x="450" y="900" width="800" height="180" fill="#fff3cd" stroke="#856404" stroke-width="1"/>
+    <text x="850" y="920" class="table-title" style="fill: #856404;">🎯 设计说明</text>
+    
+    <text x="460" y="945" class="field-text" style="fill: #856404;">• 🔑 统一主键设计: 所有表都使用 bigint 类型的自增主键</text>
+    <text x="460" y="965" class="field-text" style="fill: #856404;">• 🗑️ 软删除机制: 通过 deleted 字段实现软删除(0正常/1删除)</text>
+    <text x="460" y="985" class="field-text" style="fill: #856404;">• 👤 操作人员追踪: 记录 creator 和 updater 信息</text>
+    <text x="460" y="1005" class="field-text" style="fill: #856404;">• ⏰ 完整时间戳: 包含 create_time 和 update_time</text>
+    <text x="460" y="1025" class="field-text" style="fill: #856404;">• 📊 统一状态管理: 使用 status 字段(0禁用/1启用)</text>
+    <text x="460" y="1045" class="field-text" style="fill: #856404;">• 🔧 JSON配置存储: 复杂配置信息使用 text 类型存储JSON</text>
+    <text x="460" y="1065" class="field-text" style="fill: #856404;">• 🌐 使用 utf8mb4 字符集，支持完整 Unicode 字符</text>
+  </g>
+  
+</svg>
