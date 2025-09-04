@@ -52,7 +52,7 @@ public class OllamaConfig {
 
 
     @Bean("ollamaPgVectorStore")
-    public PgVectorStore pgVectorStore(OllamaApi ollamaApi, JdbcTemplate jdbcTemplate) {
+    public PgVectorStore pgVectorStore(OllamaApi ollamaApi, @Qualifier("pgVectorJdbcTemplate") JdbcTemplate jdbcTemplate) {
         OllamaEmbeddingModel embeddingModel = OllamaEmbeddingModel
                 .builder()
                 .ollamaApi(ollamaApi)
