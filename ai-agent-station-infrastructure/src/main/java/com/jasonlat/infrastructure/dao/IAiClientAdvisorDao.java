@@ -2,6 +2,7 @@ package com.jasonlat.infrastructure.dao;
 
 import com.jasonlat.infrastructure.dao.po.AiClientAdvisor;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * <p>
@@ -13,4 +14,10 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface IAiClientAdvisorDao extends BaseMapper<AiClientAdvisor> {
 
+    /**
+     * 根据顾问ID查询顾问配置
+     * @param advisorId 顾问ID
+     * @return 顾问配置对象
+     */
+    AiClientAdvisor queryByAdvisorId(@Param("advisorId") String advisorId);
 }

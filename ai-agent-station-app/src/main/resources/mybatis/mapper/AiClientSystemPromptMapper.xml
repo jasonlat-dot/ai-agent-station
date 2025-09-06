@@ -13,5 +13,10 @@
         <result column="create_time" property="createTime" />
         <result column="update_time" property="updateTime" />
     </resultMap>
+    <select id="queryByPromptId" resultType="com.jasonlat.infrastructure.dao.po.AiClientSystemPrompt">
+        SELECT id, prompt_id, prompt_name, prompt_content, description, status, create_time, update_time
+        FROM `ai-agent-station`.`ai_client_system_prompt`
+        WHERE prompt_id = #{promptId} AND status = 1
+    </select>
 
 </mapper>

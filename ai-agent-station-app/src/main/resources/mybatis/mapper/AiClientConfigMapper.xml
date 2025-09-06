@@ -15,4 +15,10 @@
         <result column="update_time" property="updateTime" />
     </resultMap>
 
+    <select id="queryBySourceTypeAndId" resultType="com.jasonlat.infrastructure.dao.po.AiClientConfig">
+        SELECT id, source_type, source_id, target_type, target_id, ext_param, status, create_time, update_time
+        FROM `ai-agent-station`.`ai_client_config`
+        WHERE source_type = #{sourceType} AND source_id = #{sourceId} AND status = 1
+    </select>
+
 </mapper>

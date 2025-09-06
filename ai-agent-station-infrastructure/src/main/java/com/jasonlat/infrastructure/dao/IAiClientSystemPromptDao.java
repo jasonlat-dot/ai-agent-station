@@ -2,6 +2,7 @@ package com.jasonlat.infrastructure.dao;
 
 import com.jasonlat.infrastructure.dao.po.AiClientSystemPrompt;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * <p>
@@ -13,4 +14,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface IAiClientSystemPromptDao extends BaseMapper<AiClientSystemPrompt> {
 
+    /**
+     * 根据提示词ID查询系统提示词配置
+     */
+    AiClientSystemPrompt queryByPromptId(@Param("promptId") String promptId);
 }

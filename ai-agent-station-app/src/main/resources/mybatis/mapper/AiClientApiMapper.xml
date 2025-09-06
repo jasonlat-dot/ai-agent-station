@@ -14,5 +14,10 @@
         <result column="create_time" property="createTime" />
         <result column="update_time" property="updateTime" />
     </resultMap>
+    <select id="queryByApiId" resultType="com.jasonlat.infrastructure.dao.po.AiClientApi">
+        SELECT id, api_id, base_url, api_key, completions_path, embeddings_path, status, create_time, update_time
+        FROM `ai-agent-station`.`ai_client_api`
+        WHERE api_id = #{apiId} AND status = 1
+    </select>
 
 </mapper>

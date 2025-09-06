@@ -92,14 +92,6 @@ spring:
     topic:
       activity_sku_stock_zero: activity_sku_stock_zero
 
-
-# mybatis plus 配置
-mybatis-plus:
-  configuration:
-    map-underscore-to-camel-case: true
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-  mapper-locations: classpath:mybatis/mapper/*.xml
-
 jq1024:
   cc:
     # redisson 配置

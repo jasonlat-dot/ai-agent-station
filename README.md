@@ -16,7 +16,7 @@ AI Agent Station 是一个基于 Spring Boot 3.x 和 Java 17 构建的智能代�
 - **Java 17** - 编程语言
 - **Spring Boot 3.4.3** - 应用框架
 - **Maven** - 项目管理和构建工具
-- **MyBatis Plus 3.5.5** - 数据持久化框架
+- **MyBatis Plus 3.5.14** - 数据持久化框架
 - **MySQL 8.x** - 关系型数据库
 - **Redis** - 缓存和分布式锁
 - **RabbitMQ** - 消息队列

@@ -3,7 +3,16 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+    <!-- 驼峰命名转换 -->
+    <settings>
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <!-- 日志实现 -->
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+    </settings>
+
     <!-- 暂时未使用 文档：https://mybatis.org/mybatis-3/zh/configuration.html#typeAliases -->
     <typeAliases>
+
     </typeAliases>
+
 </configuration>

@@ -14,5 +14,10 @@
         <result column="create_time" property="createTime" />
         <result column="update_time" property="updateTime" />
     </resultMap>
+    <select id="queryByMcpId" resultType="com.jasonlat.infrastructure.dao.po.AiClientToolMcp">
+        SELECT id, mcp_id, mcp_name, transport_type, transport_config, request_timeout, status, create_time, update_time
+        FROM `ai-agent-station`.`ai_client_tool_mcp`
+        WHERE mcp_id = #{mcpId} AND status = 1
+    </select>
 
 </mapper>

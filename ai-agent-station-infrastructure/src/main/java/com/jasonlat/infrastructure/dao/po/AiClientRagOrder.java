@@ -8,6 +8,8 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+
+import com.jasonlat.infrastructure.dao.po.base.BasePoSupport;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,7 +24,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @TableName("ai_client_rag_order")
-public class AiClientRagOrder implements Serializable {
+public class AiClientRagOrder extends BasePoSupport implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -50,22 +52,4 @@ public class AiClientRagOrder implements Serializable {
      */
     @TableField("knowledge_tags")
     private String knowledgeTags;
-
-    /**
-     * 状态(0:禁用,1:启用)
-     */
-    @TableField("status")
-    private Boolean status;
-
-    /**
-     * 创建时间
-     */
-    @TableField("create_time")
-    private LocalDateTime createTime;
-
-    /**
-     * 更新时间
-     */
-    @TableField("update_time")
-    private LocalDateTime updateTime;
 }

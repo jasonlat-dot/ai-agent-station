@@ -7,7 +7,8 @@ import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.time.LocalDateTime;
+
+import com.jasonlat.infrastructure.dao.po.base.BasePoSupport;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,7 +23,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @TableName("ai_agent_task_schedule")
-public class AiAgentTaskSchedule implements Serializable {
+public class AiAgentTaskSchedule extends BasePoSupport implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -62,22 +63,4 @@ public class AiAgentTaskSchedule implements Serializable {
      */
     @TableField("task_param")
     private String taskParam;
-
-    /**
-     * 状态(0:禁用,1:启用)
-     */
-    @TableField("status")
-    private Boolean status;
-
-    /**
-     * 创建时间
-     */
-    @TableField("create_time")
-    private LocalDateTime createTime;
-
-    /**
-     * 更新时间
-     */
-    @TableField("update_time")
-    private LocalDateTime updateTime;
 }

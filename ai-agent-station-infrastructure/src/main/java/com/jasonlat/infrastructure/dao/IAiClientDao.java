@@ -2,6 +2,7 @@ package com.jasonlat.infrastructure.dao;
 
 import com.jasonlat.infrastructure.dao.po.AiClient;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * <p>
@@ -13,4 +14,10 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface IAiClientDao extends BaseMapper<AiClient> {
 
+    /**
+     * 根据客户端ID查询AI客户端配置
+     * @param clientId 客户端ID
+     * @return AI客户端配置对象
+     */
+    AiClient queryByClientId(@Param("clientId") String clientId);
 }
