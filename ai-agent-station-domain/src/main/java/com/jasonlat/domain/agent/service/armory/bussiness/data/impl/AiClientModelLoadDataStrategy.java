@@ -2,6 +2,7 @@ package com.jasonlat.domain.agent.service.armory.bussiness.data.impl;
 
 import com.jasonlat.domain.agent.adapter.repository.IAgentRepository;
 import com.jasonlat.domain.agent.model.entity.ArmoryCommandEntity;
+import com.jasonlat.domain.agent.model.valobj.AiAgentEnumVO;
 import com.jasonlat.domain.agent.model.valobj.AiClientApiVO;
 import com.jasonlat.domain.agent.model.valobj.AiClientModelVO;
 import com.jasonlat.domain.agent.service.armory.bussiness.data.ILoadDataStrategy;
@@ -36,5 +37,11 @@ public class AiClientModelLoadDataStrategy implements ILoadDataStrategy {
             log.info("查询配置数据(ai_client_model) {}", modelIdList);
             return agentRepository.queryAiClientModelVOByModelIds(modelIdList);
         }, threadPoolExecutor);
+
+        CompletableFuture.allOf(aiClientApiListFuture).thenRun(() -> {
+            dynamicContext.setValue(AiAgentEnumVO.AI_CLIENT_API.getDynamicDataKey(), aiClientApiListFuture.join());
+            dynamicContext.setValue(AiAgentEnumVO.AI_CLIENT_MODEL.getDynamicDataKey(), aiClientModelListFuture.join());
+
+        }).join();
     }
 }

@@ -22,7 +22,7 @@ public class DefaultArmoryStrategyFactory {
         this.rootNode = rootNode;
     }
 
-    public StrategyHandler<ArmoryCommandEntity, DefaultArmoryStrategyFactory.DynamicContext, String> strategyHandler() {
+    public StrategyHandler<ArmoryCommandEntity, DefaultArmoryStrategyFactory.DynamicContext, String> armoryStrategyHandler() {
         return rootNode;
     }
 

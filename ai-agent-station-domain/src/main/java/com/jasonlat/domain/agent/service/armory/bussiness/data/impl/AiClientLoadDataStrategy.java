@@ -56,6 +56,14 @@ public class AiClientLoadDataStrategy implements ILoadDataStrategy {
             return agentRepository.queryAiClientVOByClientIdList(clientIdList);
         }, threadPoolExecutor);
 
-        CompletableFuture.allOf(aiClientApiFuture, aiClientModelFuture, aiClientToolMcpFuture, aiClientSystemPromptFuture, aiClientAdvisorFuture, aiClientFuture).join();
+        CompletableFuture.allOf(aiClientApiFuture).thenRun(() -> {
+            dynamicContext.setValue(AiAgentEnumVO.AI_CLIENT_API.getDynamicDataKey(), aiClientApiFuture.join());
+            dynamicContext.setValue(AiAgentEnumVO.AI_CLIENT_MODEL.getDynamicDataKey(), aiClientModelFuture.join());
+            dynamicContext.setValue(AiAgentEnumVO.AI_CLIENT_SYSTEM_PROMPT.getDynamicDataKey(), aiClientSystemPromptFuture.join());
+            dynamicContext.setValue(AiAgentEnumVO.AI_CLIENT_TOOL_MCP.getDynamicDataKey(), aiClientToolMcpFuture.join());
+            dynamicContext.setValue(AiAgentEnumVO.AI_CLIENT_ADVISOR.getDynamicDataKey(), aiClientAdvisorFuture.join());
+            dynamicContext.setValue(AiAgentEnumVO.AI_CLIENT.getDynamicDataKey(), aiClientFuture.join());
+
+        }).join();
     }
 }
