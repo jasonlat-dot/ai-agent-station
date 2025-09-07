@@ -51,7 +51,7 @@ public class AiClientApiNode extends AbstractArmorySupport {
             // 构建OpenAiApi实例
             OpenAiApi openAiApi = openAiApiBuilder.build();
             // 通过id注册bean对象
-            registerBean(this.beanName(aiClientApi.getApiId()), OpenAiApi.class, openAiApi);
+            this.registerBean(this.beanName(aiClientApi.getApiId()), OpenAiApi.class, openAiApi);
         });
 
         // 继续往下路由

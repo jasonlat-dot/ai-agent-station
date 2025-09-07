@@ -27,7 +27,7 @@ public abstract class AbstractArmorySupport extends AbstractMultiThreadStrategyR
 
     @Override
     protected void multiThread(ArmoryCommandEntity requestParameter, DefaultArmoryStrategyFactory.DynamicContext dynamicContext)  {
-        log.info("缺省的方法：AbstractArmorySupport.multiThread()");
+        // 缺省的方法, 子类按需实现
     }
 
     protected String beanName(String id) {
@@ -115,11 +115,6 @@ public abstract class AbstractArmorySupport extends AbstractMultiThreadStrategyR
         Objects.requireNonNull(beanClass, "Bean类型不能为null");
 
         try {
-            if (!applicationContext.containsBean(beanName)) {
-                log.warn("Bean不存在: {}({})", beanName, beanClass.getName());
-                return null;
-            }
-
             T bean = applicationContext.getBean(beanName, beanClass);
             log.debug("成功获取Bean: {}({})", beanName, beanClass.getName());
             return bean;
@@ -128,4 +123,7 @@ public abstract class AbstractArmorySupport extends AbstractMultiThreadStrategyR
             throw new RuntimeException("获取Bean失败: " + beanName, e);
         }
     }
+
+
+
 }

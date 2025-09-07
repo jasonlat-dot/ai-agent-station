@@ -3,6 +3,7 @@ package com.jasonlat.domain.agent.adapter.repository;
 import com.jasonlat.domain.agent.model.valobj.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author jasonlat
@@ -35,6 +36,13 @@ public interface IAgentRepository {
      * @return AI客户端系统提示信息
      */
     List<AiClientSystemPromptVO> queryAiClientSystemPromptVOByClientIds(List<String> clientIdList);
+
+    /**
+     * 获取AI客户端系统提示信息
+     * @param clientIdList AI客户端ID列表
+     * @return AI客户端系统提示信息 Map结构 key是 PromptId
+     */
+    Map<String, AiClientSystemPromptVO> queryAiClientSystemPromptMapVOByClientIds(List<String> clientIdList);
 
     /**
      * 获取AI客户端顾问信息

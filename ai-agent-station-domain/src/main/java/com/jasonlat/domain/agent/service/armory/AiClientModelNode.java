@@ -7,6 +7,7 @@ import com.jasonlat.domain.agent.model.valobj.AiAgentEnumVO;
 import com.jasonlat.domain.agent.model.valobj.AiClientModelVO;
 import com.jasonlat.domain.agent.service.armory.factory.DefaultArmoryStrategyFactory;
 import io.modelcontextprotocol.client.McpSyncClient;
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.mcp.SyncMcpToolCallbackProvider;
 import org.springframework.ai.openai.OpenAiChatModel;
@@ -20,6 +21,10 @@ import java.util.List;
 @Slf4j
 @Service
 public class AiClientModelNode extends AbstractArmorySupport {
+
+    @Resource
+    private AiClientAdvisorNode aiClientAdvisorNode;
+
     @Override
     protected String doApply(ArmoryCommandEntity requestParameter, DefaultArmoryStrategyFactory.DynamicContext dynamicContext) throws Exception {
         log.info("Ai Agent 构建节点，Mode 对话模型{}", JSON.toJSONString(requestParameter));
@@ -57,7 +62,7 @@ public class AiClientModelNode extends AbstractArmorySupport {
                     .build();
 
             // 注册 Bean 对象
-            registerBean(beanName(modelVO.getModelId()), OpenAiChatModel.class, chatModel);
+            registerBean(this.beanName(modelVO.getModelId()), OpenAiChatModel.class, chatModel);
         }
 
         return router(requestParameter, dynamicContext);
@@ -65,7 +70,7 @@ public class AiClientModelNode extends AbstractArmorySupport {
 
     @Override
     public StrategyHandler<ArmoryCommandEntity, DefaultArmoryStrategyFactory.DynamicContext, String> get(ArmoryCommandEntity requestParameter, DefaultArmoryStrategyFactory.DynamicContext dynamicContext) throws Exception {
-        return null;
+        return aiClientAdvisorNode;
     }
 
     @Override

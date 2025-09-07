@@ -13,7 +13,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 @Configuration
 public class AiAgentConfig {
 
-    @Bean("vectorStore")
+    @Bean("openaiPgVectorStore")
     public PgVectorStore pgVectorStore(@Value("${spring.ai.openai.base-url}") String baseUrl,
                                        @Value("${spring.ai.openai.api-key}") String apiKey,
                                        @Value("${spring.ai.openai.vector-table-name}") String vectorTableName,

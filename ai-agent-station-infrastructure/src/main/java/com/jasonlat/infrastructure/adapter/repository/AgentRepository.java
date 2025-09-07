@@ -12,6 +12,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import static com.jasonlat.domain.agent.model.valobj.AiAgentEnumVO.*;
 
@@ -251,6 +253,26 @@ public class AgentRepository implements IAgentRepository {
         return result;
     }
 
+    @Override
+    public Map<String, AiClientSystemPromptVO> queryAiClientSystemPromptMapVOByClientIds(List<String> clientIdList) {
+        List<AiClientSystemPromptVO> aiClientSystemPrompts = queryAiClientSystemPromptVOByClientIds(clientIdList);
+        if (null == aiClientSystemPrompts || aiClientSystemPrompts.isEmpty()) {
+            return Map.of();
+        }
+
+        // 将PO对象转换为VO对象，并构建Map结构
+        return aiClientSystemPrompts.stream()
+                .map(prompt -> AiClientSystemPromptVO.builder()
+                        .promptId(prompt.getPromptId())
+                        .promptContent(prompt.getPromptContent())
+                        .build())
+                .collect(Collectors.toMap(
+                        AiClientSystemPromptVO::getPromptId,  // key: id
+                        prompt -> prompt,               // value: AiClientSystemPromptVO对象
+                        (existing, replacement) -> existing  // 如果有重复key，保留第一个
+                ));
+    }
+
     /**
      * 获取AI客户端顾问信息
      * @param clientIdList AI客户端ID列表
@@ -287,9 +309,9 @@ public class AgentRepository implements IAgentRepository {
                 String extParam = aiClientAdvisor.getExtParam();
                 if (null != extParam && !extParam.trim().isEmpty()) {
                     try {
-                        if ("ChatMemory".equals(aiClientAdvisor.getAdvisorType())) {
+                        if (AiClientAdvisorTypeEnumVO.CHAT_MEMORY.getCode().equals(aiClientAdvisor.getAdvisorType())) {
                             chatMemory = JSON.parseObject(extParam, AiClientAdvisorVO.ChatMemory.class);
-                        } else if ("RagAnswer".equals(aiClientAdvisor.getAdvisorType())) {
+                        } else if (AiClientAdvisorTypeEnumVO.RAG_ANSWER.getCode().equals(aiClientAdvisor.getAdvisorType())) {
                             ragAnswer = JSON.parseObject(extParam, AiClientAdvisorVO.RagAnswer.class);
                         }
                     } catch (Exception exception) {
@@ -346,21 +368,25 @@ public class AgentRepository implements IAgentRepository {
                     continue;
                 }
 
-                switch (clientConfig.getSourceType()) {
+                switch (clientConfig.getTargetType()) {
                     case "model":
-                        modelId = clientConfig.getSourceId();
+                        modelId = clientConfig.getTargetId();
+                        if (null == modelId) {
+                            throw new RuntimeException("AI客户端【clientId is + " + clientId + "】配置错误: client未正确配置model模型");
+                        }
                         break;
                     case "prompt":
-                        promptIdList.add(clientConfig.getSourceId());
+                        promptIdList.add(clientConfig.getTargetId());
                         break;
                     case "tool_mcp":
-                        mcpIdList.add(clientConfig.getSourceId());
+                        mcpIdList.add(clientConfig.getTargetId());
                         break;
                     case "advisor":
-                        advisorIdList.add(clientConfig.getSourceId());
+                        advisorIdList.add(clientConfig.getTargetId());
                         break;
                 }
             }
+
 
             // 构建AI客户端信息
             AiClientVO aiClientVO = AiClientVO.builder()
