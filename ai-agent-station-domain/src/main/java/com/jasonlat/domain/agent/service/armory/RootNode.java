@@ -32,13 +32,8 @@ public class RootNode extends AbstractArmorySupport {
 
     @Override
     protected void multiThread(ArmoryCommandEntity requestParameter, DefaultArmoryStrategyFactory.DynamicContext dynamicContext)  {
-        // 通过策略模式，获取到不同的实现，加载自己的数据
-        String commandType = requestParameter.getCommandType();
-        // 根据命令获取数据装配策略
-        AiAgentEnumVO aiAgentEnumVO = AiAgentEnumVO.getByCode(commandType);
-        String loadDataStrategyKey = aiAgentEnumVO.getLoadDataStrategy();
-        // 通过策略模式，获取到不同的实现，加载自己的数据
-        ILoadDataStrategy loadDataStrategy = loadDataStrategyMap.get(loadDataStrategyKey);
+        // 加载数据
+        ILoadDataStrategy loadDataStrategy = loadDataStrategyMap.get(requestParameter.getLoadDataStrategy());
         if (null == loadDataStrategy) {
             throw new RuntimeException("loadDataStrategy is null, please check commandType is one of " + loadDataStrategyMap.keySet());
         }
