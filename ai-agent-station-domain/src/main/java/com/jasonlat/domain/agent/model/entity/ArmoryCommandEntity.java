@@ -1,6 +1,6 @@
 package com.jasonlat.domain.agent.model.entity;
 
-import com.jasonlat.domain.agent.model.valobj.AiAgentEnumVO;
+import com.jasonlat.domain.agent.model.valobj.enums.AiAgentEnumVO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

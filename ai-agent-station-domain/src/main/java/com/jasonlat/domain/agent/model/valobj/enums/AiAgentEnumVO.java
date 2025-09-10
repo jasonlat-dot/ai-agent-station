@@ -1,4 +1,4 @@
-package com.jasonlat.domain.agent.model.valobj;
+package com.jasonlat.domain.agent.model.valobj.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

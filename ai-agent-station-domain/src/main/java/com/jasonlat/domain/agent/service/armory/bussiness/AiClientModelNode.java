@@ -1,11 +1,11 @@
-package com.jasonlat.domain.agent.service.armory;
+package com.jasonlat.domain.agent.service.armory.bussiness;
 
 import com.alibaba.fastjson.JSON;
 import com.jasonlat.design.framework.tree.StrategyHandler;
 import com.jasonlat.domain.agent.model.entity.ArmoryCommandEntity;
-import com.jasonlat.domain.agent.model.valobj.AiAgentEnumVO;
+import com.jasonlat.domain.agent.model.valobj.enums.AiAgentEnumVO;
 import com.jasonlat.domain.agent.model.valobj.AiClientModelVO;
-import com.jasonlat.domain.agent.service.armory.factory.DefaultArmoryStrategyFactory;
+import com.jasonlat.domain.agent.service.armory.bussiness.factory.DefaultArmoryStrategyFactory;
 import io.modelcontextprotocol.client.McpSyncClient;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
@@ -39,7 +39,7 @@ public class AiClientModelNode extends AbstractArmorySupport {
         for (AiClientModelVO modelVO : aiClientModelList) {
 
             // 获取当前模型关联的 API Bean 对象
-            OpenAiApi openAiApi = getBean(AiAgentEnumVO.AI_CLIENT_API.getBeanName(modelVO.getApiId()));
+            OpenAiApi openAiApi = beanUtils.getBean(AiAgentEnumVO.AI_CLIENT_API.getBeanName(modelVO.getApiId()));
             if (null == openAiApi) {
                 throw new RuntimeException("mode 2 api is null");
             }
@@ -47,7 +47,7 @@ public class AiClientModelNode extends AbstractArmorySupport {
             // 获取当前模型关联的 Tool MCP Bean 对象
             List<McpSyncClient> mcpSyncClients = new ArrayList<>();
             for (String toolMcpId : modelVO.getToolMcpIds()) {
-                McpSyncClient mcpSyncClient = getBean(AiAgentEnumVO.AI_CLIENT_TOOL_MCP.getBeanName(toolMcpId));
+                McpSyncClient mcpSyncClient = beanUtils.getBean(AiAgentEnumVO.AI_CLIENT_TOOL_MCP.getBeanName(toolMcpId));
                 mcpSyncClients.add(mcpSyncClient);
             }
 
@@ -62,7 +62,7 @@ public class AiClientModelNode extends AbstractArmorySupport {
                     .build();
 
             // 注册 Bean 对象
-            registerBean(this.beanName(modelVO.getModelId()), OpenAiChatModel.class, chatModel);
+            beanUtils.registerBean(this.beanName(modelVO.getModelId()), OpenAiChatModel.class, chatModel);
         }
 
         return router(requestParameter, dynamicContext);

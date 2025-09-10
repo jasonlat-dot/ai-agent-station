@@ -2,9 +2,9 @@ package com.jasonlat.infrastructure.adapter.repository;
 
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jasonlat.domain.agent.adapter.repository.IAgentRepository;
 import com.jasonlat.domain.agent.model.valobj.*;
+import com.jasonlat.domain.agent.model.valobj.enums.AiClientAdvisorTypeEnumVO;
 import com.jasonlat.infrastructure.dao.*;
 import com.jasonlat.infrastructure.dao.po.*;
 import lombok.RequiredArgsConstructor;
@@ -12,10 +12,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static com.jasonlat.domain.agent.model.valobj.AiAgentEnumVO.*;
+import static com.jasonlat.domain.agent.model.valobj.enums.AiAgentEnumVO.*;
 
 @Slf4j
 @Repository
@@ -29,6 +28,7 @@ public class AgentRepository implements IAgentRepository {
     private final IAiClientSystemPromptDao aiClientSystemPromptDao;
     private final IAiClientAdvisorDao aiClientAdvisorDao;
     private final IAiClientDao aiClientDao;
+    private final IAiAgentFlowConfigDao aiAgentFlowConfigDao;
 
     /**
      * 查询AI客户端API信息
@@ -196,6 +196,7 @@ public class AgentRepository implements IAgentRepository {
                                     }
                                 } catch (Exception e) {
                                     log.error("解析传输配置失败: {}", e.getMessage(), e);
+                                    throw new RuntimeException("Failed to parse transport config: " + e.getMessage(), e);
                                 }
 
 
@@ -476,5 +477,44 @@ public class AgentRepository implements IAgentRepository {
             result.add(modelVO);
         });
         return result;
+    }
+
+    /**
+     * 获取AI agent客户端流程配置
+     * @param aiAgentId agent ID
+     * @return AI agent 客户端流程配置
+     */
+    @Override
+    public Map<String, AiAgentClientFlowConfigVO> queryAiAgentClientFlowConfig(String aiAgentId) {
+        if (aiAgentId == null || aiAgentId.trim().isEmpty()) {
+            return Map.of();
+        }
+        try {
+            // 根据智能体ID查询流程配置列表
+            List<AiAgentFlowConfig> flowConfigs = aiAgentFlowConfigDao.queryByAgentId(aiAgentId);
+            if (flowConfigs == null || flowConfigs.isEmpty()) {
+                return Map.of();
+            }
+
+            // 转换为Map结构，key为 ClientType，value为AiAgentClientFlowConfigVO
+            return flowConfigs.stream()
+                    .map(flowConfig -> AiAgentClientFlowConfigVO.builder()
+                            .clientId(flowConfig.getClientId())
+                            .clientName(flowConfig.getClientName())
+                            .clientType(flowConfig.getClientType())
+                            .sequence(flowConfig.getSequence())
+                            .build())
+                    .collect(Collectors.toMap(
+                            AiAgentClientFlowConfigVO::getClientType,  // key: ClientType
+                            flowConfig -> flowConfig,               // value: AiAgentClientFlowConfigVO对象
+                            (existing, replacement) -> existing  // 如果有重复key，保留第一个
+                    ));
+        } catch (NumberFormatException e) {
+            log.error("Invalid aiAgentId format: {}", aiAgentId, e);
+            return Map.of();
+        } catch (Exception e) {
+            log.error("Query ai agent client flow config failed, aiAgentId: {}", aiAgentId, e);
+            return Map.of();
+        }
     }
 }

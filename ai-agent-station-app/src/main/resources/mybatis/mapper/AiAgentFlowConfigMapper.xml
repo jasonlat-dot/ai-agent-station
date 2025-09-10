@@ -7,8 +7,17 @@
         <id column="id" property="id" />
         <result column="agent_id" property="agentId" />
         <result column="client_id" property="clientId" />
+        <result column="client_name" property="clientName" />
+        <result column="client_type" property="clientType" />
         <result column="sequence" property="sequence" />
         <result column="create_time" property="createTime" />
     </resultMap>
+
+    <select id="queryByAgentId" resultType="com.jasonlat.infrastructure.dao.po.AiAgentFlowConfig">
+        SELECT `id`, `agent_id`, `client_id`, `client_name`, `client_type`, `sequence`, `create_time`
+        FROM `ai-agent-station`.`ai_agent_flow_config`
+        WHERE agent_id = #{agentId}
+        ORDER BY sequence
+    </select>
 
 </mapper>

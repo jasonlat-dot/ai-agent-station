@@ -71,4 +71,11 @@ public interface IAgentRepository {
      * @return AI客户端模型信息
      */
     List<AiClientModelVO> queryAiClientModelVOByModelIds(List<String> modelIdList);
+
+    /**
+     * 获取AI agent客户端流程配置
+     * @param aiAgentId agent ID
+     * @return AI agent 客户端流程配置
+     */
+    Map<String, AiAgentClientFlowConfigVO> queryAiAgentClientFlowConfig(String aiAgentId);
 }

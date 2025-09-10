@@ -1,12 +1,12 @@
-package com.jasonlat.domain.agent.service.armory;
+package com.jasonlat.domain.agent.service.armory.bussiness;
 
 
 import com.alibaba.fastjson2.JSON;
 import com.jasonlat.design.framework.tree.StrategyHandler;
 import com.jasonlat.domain.agent.model.entity.ArmoryCommandEntity;
-import com.jasonlat.domain.agent.model.valobj.AiAgentEnumVO;
+import com.jasonlat.domain.agent.model.valobj.enums.AiAgentEnumVO;
 import com.jasonlat.domain.agent.model.valobj.AiClientApiVO;
-import com.jasonlat.domain.agent.service.armory.factory.DefaultArmoryStrategyFactory;
+import com.jasonlat.domain.agent.service.armory.bussiness.factory.DefaultArmoryStrategyFactory;
 import jakarta.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,7 +51,7 @@ public class AiClientApiNode extends AbstractArmorySupport {
             // 构建OpenAiApi实例
             OpenAiApi openAiApi = openAiApiBuilder.build();
             // 通过id注册bean对象
-            this.registerBean(this.beanName(aiClientApi.getApiId()), OpenAiApi.class, openAiApi);
+            beanUtils.registerBean(this.beanName(aiClientApi.getApiId()), OpenAiApi.class, openAiApi);
         });
 
         // 继续往下路由

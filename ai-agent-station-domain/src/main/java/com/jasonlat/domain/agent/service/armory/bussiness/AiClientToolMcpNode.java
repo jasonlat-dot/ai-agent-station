@@ -1,11 +1,11 @@
-package com.jasonlat.domain.agent.service.armory;
+package com.jasonlat.domain.agent.service.armory.bussiness;
 
 import com.alibaba.fastjson2.JSON;
 import com.jasonlat.design.framework.tree.StrategyHandler;
 import com.jasonlat.domain.agent.model.entity.ArmoryCommandEntity;
-import com.jasonlat.domain.agent.model.valobj.AiAgentEnumVO;
+import com.jasonlat.domain.agent.model.valobj.enums.AiAgentEnumVO;
 import com.jasonlat.domain.agent.model.valobj.AiClientToolMcpVO;
-import com.jasonlat.domain.agent.service.armory.factory.DefaultArmoryStrategyFactory;
+import com.jasonlat.domain.agent.service.armory.bussiness.factory.DefaultArmoryStrategyFactory;
 import io.modelcontextprotocol.client.McpClient;
 import io.modelcontextprotocol.client.McpSyncClient;
 import io.modelcontextprotocol.client.transport.HttpClientSseClientTransport;
@@ -43,7 +43,7 @@ public class AiClientToolMcpNode extends AbstractArmorySupport {
             McpSyncClient mcpSyncClient = createMcpSyncClient(aiClientToolMcpVO);
 
             // 注册 MCP 对象
-            registerBean(this.beanName(aiClientToolMcpVO.getMcpId()), McpSyncClient.class, mcpSyncClient);
+            beanUtils.registerBean(this.beanName(aiClientToolMcpVO.getMcpId()), McpSyncClient.class, mcpSyncClient);
         });
 
         return router(requestParameter, dynamicContext);

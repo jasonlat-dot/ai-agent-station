@@ -2,11 +2,11 @@ package com.jasonlat.domain.agent.service.armory.bussiness.data.impl;
 
 import com.jasonlat.domain.agent.adapter.repository.IAgentRepository;
 import com.jasonlat.domain.agent.model.entity.ArmoryCommandEntity;
-import com.jasonlat.domain.agent.model.valobj.AiAgentEnumVO;
+import com.jasonlat.domain.agent.model.valobj.enums.AiAgentEnumVO;
 import com.jasonlat.domain.agent.model.valobj.AiClientApiVO;
 import com.jasonlat.domain.agent.model.valobj.AiClientModelVO;
 import com.jasonlat.domain.agent.service.armory.bussiness.data.ILoadDataStrategy;
-import com.jasonlat.domain.agent.service.armory.factory.DefaultArmoryStrategyFactory;
+import com.jasonlat.domain.agent.service.armory.bussiness.factory.DefaultArmoryStrategyFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

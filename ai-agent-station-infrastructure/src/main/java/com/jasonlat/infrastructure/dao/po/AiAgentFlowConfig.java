@@ -37,13 +37,25 @@ public class AiAgentFlowConfig implements Serializable {
      * 智能体ID
      */
     @TableField("agent_id")
-    private Long agentId;
+    private String agentId;
 
     /**
      * 客户端ID
      */
     @TableField("client_id")
-    private Long clientId;
+    private String clientId;
+
+    /**
+     * 客户端名称
+     */
+    @TableField("client_name")
+    private String clientName;
+
+    /**
+     * 客户端类型
+     */
+    @TableField("client_type")
+    private String clientType;
 
     /**
      * 序列号(执行顺序)

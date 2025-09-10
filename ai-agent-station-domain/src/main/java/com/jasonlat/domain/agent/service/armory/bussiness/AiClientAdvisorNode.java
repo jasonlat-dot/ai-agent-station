@@ -1,12 +1,12 @@
-package com.jasonlat.domain.agent.service.armory;
+package com.jasonlat.domain.agent.service.armory.bussiness;
 
 import com.alibaba.fastjson2.JSON;
 import com.jasonlat.design.framework.tree.StrategyHandler;
 import com.jasonlat.domain.agent.model.entity.ArmoryCommandEntity;
-import com.jasonlat.domain.agent.model.valobj.AiAgentEnumVO;
-import com.jasonlat.domain.agent.model.valobj.AiClientAdvisorTypeEnumVO;
+import com.jasonlat.domain.agent.model.valobj.enums.AiAgentEnumVO;
+import com.jasonlat.domain.agent.model.valobj.enums.AiClientAdvisorTypeEnumVO;
 import com.jasonlat.domain.agent.model.valobj.AiClientAdvisorVO;
-import com.jasonlat.domain.agent.service.armory.factory.DefaultArmoryStrategyFactory;
+import com.jasonlat.domain.agent.service.armory.bussiness.factory.DefaultArmoryStrategyFactory;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.client.advisor.api.Advisor;
@@ -53,7 +53,7 @@ public class AiClientAdvisorNode extends AbstractArmorySupport {
             // 创建顾问对象
             Advisor aiClientAdvisor = createAiClientAdvisor(aiClientAdvisorVO);
             // 注册顾问对象
-            this.registerBean(this.beanName(aiClientAdvisorVO.getAdvisorId()), Advisor.class, aiClientAdvisor);
+            beanUtils.registerBean(this.beanName(aiClientAdvisorVO.getAdvisorId()), Advisor.class, aiClientAdvisor);
         });
 
         return router(requestParameter, dynamicContext);

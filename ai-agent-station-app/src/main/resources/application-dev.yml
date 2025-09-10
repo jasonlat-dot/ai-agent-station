@@ -79,6 +79,23 @@ spring:
         options:
           # 配置模型处理的批量大小，这里设置为512。表示模型一次可以处理 512 个文本片段的嵌入请求
           num-batch: 768
+    zhipuai:
+      vector-table-name: vector_store_zhipuai
+      image:
+        base-url: https://open.bigmodel.cn/api/paas
+        api-key: c3e3912426c49a7b990280b1d2d235a3.tcgJOlShzn6ba6uk
+        options:
+          model: GLM-4V-Flash
+      chat:
+        api-key: c3e3912426c49a7b990280b1d2d235a3.tcgJOlShzn6ba6uk
+        base-url: https://open.bigmodel.cn/api/paas
+        options:
+          model: GLM-4.5-Flash # GLM-4-Flash-250414
+          temperature: 0.7  # 设置温度参数
+      embedding:
+        options:
+          dimensions: 1024
+          model: embedding-3
 
   # Spring 配置；rabbitmq
   rabbitmq:

@@ -1,7 +1,7 @@
 package com.jasonlat.domain.agent.service.armory.bussiness.data;
 
 import com.jasonlat.domain.agent.model.entity.ArmoryCommandEntity;
-import com.jasonlat.domain.agent.service.armory.factory.DefaultArmoryStrategyFactory;
+import com.jasonlat.domain.agent.service.armory.bussiness.factory.DefaultArmoryStrategyFactory;
 
 public interface ILoadDataStrategy {
 

@@ -1,13 +1,13 @@
-package com.jasonlat.domain.agent.service.armory;
+package com.jasonlat.domain.agent.service.armory.bussiness;
 
 import cn.hutool.core.text.StrBuilder;
 import com.alibaba.fastjson2.JSON;
 import com.jasonlat.design.framework.tree.StrategyHandler;
 import com.jasonlat.domain.agent.model.entity.ArmoryCommandEntity;
-import com.jasonlat.domain.agent.model.valobj.AiAgentEnumVO;
+import com.jasonlat.domain.agent.model.valobj.enums.AiAgentEnumVO;
 import com.jasonlat.domain.agent.model.valobj.AiClientSystemPromptVO;
 import com.jasonlat.domain.agent.model.valobj.AiClientVO;
-import com.jasonlat.domain.agent.service.armory.factory.DefaultArmoryStrategyFactory;
+import com.jasonlat.domain.agent.service.armory.bussiness.factory.DefaultArmoryStrategyFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.api.Advisor;
@@ -47,7 +47,7 @@ public class AiClientNode extends AbstractArmorySupport {
         aiClientList.forEach(aiClient -> {
 
             // 获取对话模型
-            OpenAiChatModel chatModel = this.getBean(aiClient.getModelBeanName());
+            OpenAiChatModel chatModel = beanUtils.getBean(aiClient.getModelBeanName());
             if (null == chatModel) {
                 throw new RuntimeException("AI客户端【clientId is + " + aiClient.getClientId() + "】配置错误: client未正确配置model模型");
             }
@@ -72,13 +72,13 @@ public class AiClientNode extends AbstractArmorySupport {
             // 构建顾问角色
             List<String> advisorBeanNameList = aiClient.getAdvisorBeanNameList();
             if (null != advisorBeanNameList && !advisorBeanNameList.isEmpty()) {
-                List<Advisor> advisors = advisorBeanNameList.stream().map(beanName -> this.getBean(beanName, Advisor.class)).toList();
+                List<Advisor> advisors = advisorBeanNameList.stream().map(beanName -> beanUtils.getBean(beanName, Advisor.class)).toList();
                 chatClientBuilder.defaultAdvisors(advisors);
             }
 
             // 构建对话客户端 & 注册 bean
             ChatClient client = chatClientBuilder.build();
-            this.registerBean(this.beanName(aiClient.getClientId()), ChatClient.class, client);
+            beanUtils.registerBean(this.beanName(aiClient.getClientId()), ChatClient.class, client);
         });
         return router(requestParameter, dynamicContext);
     }

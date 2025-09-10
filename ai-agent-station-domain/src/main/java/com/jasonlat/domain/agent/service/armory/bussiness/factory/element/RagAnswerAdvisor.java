@@ -1,4 +1,4 @@
-package com.jasonlat.domain.agent.service.armory.factory.element;
+package com.jasonlat.domain.agent.service.armory.bussiness.factory.element;
 
 import com.alibaba.fastjson.JSON;
 import org.springframework.ai.chat.client.ChatClientRequest;

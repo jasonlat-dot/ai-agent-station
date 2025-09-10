@@ -1,9 +1,9 @@
-package com.jasonlat.domain.agent.service.armory.factory;
+package com.jasonlat.domain.agent.service.armory.bussiness.factory;
 
 
 import com.jasonlat.design.framework.tree.StrategyHandler;
 import com.jasonlat.domain.agent.model.entity.ArmoryCommandEntity;
-import com.jasonlat.domain.agent.service.armory.RootNode;
+import com.jasonlat.domain.agent.service.armory.bussiness.RootNode;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

@@ -1,42 +1,29 @@
-package com.jasonlat.domain.agent.service.armory;
+package com.jasonlat.types.utils;
 
-import com.jasonlat.design.framework.tree.AbstractMultiThreadStrategyRouter;
-import com.jasonlat.domain.agent.model.entity.ArmoryCommandEntity;
-import com.jasonlat.domain.agent.service.armory.factory.DefaultArmoryStrategyFactory;
 import jakarta.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.context.ApplicationContext;
+import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import java.util.Objects;
 
+/**
+ * @author jasonlat
+ * 2025-09-10  20:18
+ */
+@Component
+public final class BeanUtils {
 
-public abstract class AbstractArmorySupport extends AbstractMultiThreadStrategyRouter<ArmoryCommandEntity, DefaultArmoryStrategyFactory.DynamicContext, String> {
+    private final Logger log = LoggerFactory.getLogger(BeanUtils.class);
 
-    private static final Logger log = LoggerFactory.getLogger(AbstractArmorySupport.class);
-
-
-    @Autowired
-    protected ApplicationContext applicationContext;
-
-    @Override
-    protected void multiThread(ArmoryCommandEntity requestParameter, DefaultArmoryStrategyFactory.DynamicContext dynamicContext)  {
-        // 缺省的方法, 子类按需实现
-    }
-
-    protected String beanName(String id) {
-        return null;
-    }
-
-    protected String dynamicDataKey() {
-        return null;
-    }
+    @Resource
+    private ApplicationContext applicationContext;
 
     /**
      * 通用的Bean注册方法
@@ -45,7 +32,7 @@ public abstract class AbstractArmorySupport extends AbstractMultiThreadStrategyR
      * @param beanClass Bean类型
      * @param <T>       Bean类型
      */
-    protected synchronized <T> void registerBean(String beanName, Class<T> beanClass, T beanInstance) {
+    public synchronized <T> void registerBean(String beanName, Class<T> beanClass, T beanInstance) {
         // 参数校验
         if (!StringUtils.hasLength(beanName) || !StringUtils.hasLength(beanName.trim())) {
             throw new IllegalArgumentException("Bean名称不能为空");
@@ -79,8 +66,8 @@ public abstract class AbstractArmorySupport extends AbstractMultiThreadStrategyR
      * @return Bean实例
      */
     @SuppressWarnings("unchecked")
-    protected <T> T getBean(String beanName) {
-        if (!StringUtils.hasLength(beanName) || !StringUtils.hasLength(beanName.trim())) {
+    public  <T> T getBean(String beanName) {
+        if (!org.springframework.util.StringUtils.hasLength(beanName) || !org.springframework.util.StringUtils.hasLength(beanName.trim())) {
             throw new IllegalArgumentException("Bean名称不能为空");
         }
         try {
@@ -108,8 +95,8 @@ public abstract class AbstractArmorySupport extends AbstractMultiThreadStrategyR
      * @param <T>       Bean类型
      * @return Bean实例
      */
-    protected <T> T getBean(String beanName, Class<T> beanClass) {
-        if (!StringUtils.hasLength(beanName) || !StringUtils.hasLength(beanName.trim())) {
+    public  <T> T getBean(String beanName, Class<T> beanClass) {
+        if (!org.springframework.util.StringUtils.hasLength(beanName) || !StringUtils.hasLength(beanName.trim())) {
             throw new IllegalArgumentException("Bean名称不能为空");
         }
         Objects.requireNonNull(beanClass, "Bean类型不能为null");
@@ -123,7 +110,4 @@ public abstract class AbstractArmorySupport extends AbstractMultiThreadStrategyR
             throw new RuntimeException("获取Bean失败: " + beanName, e);
         }
     }
-
-
-
 }

@@ -1,9 +1,9 @@
-package com.jasonlat.domain.agent.model.valobj;
+package com.jasonlat.domain.agent.model.valobj.enums;
 
-import com.jasonlat.domain.agent.service.armory.factory.element.RagAnswerAdvisor;
+import com.jasonlat.domain.agent.model.valobj.AiClientAdvisorVO;
+import com.jasonlat.domain.agent.service.armory.bussiness.factory.element.RagAnswerAdvisor;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import org.springframework.ai.chat.client.advisor.PromptChatMemoryAdvisor;
 import org.springframework.ai.chat.client.advisor.api.Advisor;
 import org.springframework.ai.chat.memory.MessageWindowChatMemory;
