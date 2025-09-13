@@ -80,7 +80,7 @@ public class AiClientNode extends AbstractArmorySupport {
             ChatClient client = chatClientBuilder.build();
             beanUtils.registerBean(this.beanName(aiClient.getClientId()), ChatClient.class, client);
         });
-        return router(requestParameter, dynamicContext);
+        return "Ai Client Build Completed!";
     }
 
     private StrBuilder getDefaultSystemPrompt(AiClientVO aiClient, Map<String, AiClientSystemPromptVO> systemPromptsMap) {

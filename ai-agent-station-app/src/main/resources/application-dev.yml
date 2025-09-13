@@ -60,6 +60,10 @@ spring:
         maximum-pool-size: 5 #连接池最大连接数，默认是10
         connection-timeout: 30000 #数据库连接超时时间,默认30秒，即30000
   ai:
+    agent:
+      auto-config:
+        enabled: true
+        client-ids: 3101,3102,3103,3104
     openai:
       base-url: https://dashscope.aliyuncs.com/compatible-mode  # qwen3
       api-key: sk-382688e6c9184dea8715dfbfdb241355  # qwen3

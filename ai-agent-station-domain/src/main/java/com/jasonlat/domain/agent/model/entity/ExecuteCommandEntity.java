@@ -1,6 +1,9 @@
 package com.jasonlat.domain.agent.model.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 命令执行实体
@@ -8,6 +11,9 @@ import lombok.Data;
  * 2025-09-10  19:57
  */
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class ExecuteCommandEntity {
 
     /**
