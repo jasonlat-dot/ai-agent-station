@@ -10,7 +10,6 @@ import com.jasonlat.domain.agent.service.execute.auto.step.factory.DefaultAutoAg
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.stereotype.Service;
 
-import java.util.Map;
 
 /**
  * @author jasonlat
@@ -70,16 +69,15 @@ public class Step3QualitySupervisorNode extends AbstractExecuteSupport {
                         .param(CHAT_MEMORY_CONVERSATION_ID_KEY, requestParameter.getSessionId())
                         .param(CHAT_MEMORY_RETRIEVE_SIZE_KEY, 1024))
                 .call().content();
-
         // 将监督结果保存到动态上下文中，供下一步使用
         parseSupervisionResult(dynamicContext, supervisionResult, requestParameter.getSessionId());
         dynamicContext.setValue("supervisionResult", supervisionResult);
 
         // 根据监督结果决定是否需要重新执行
-        if (supervisionResult == null || supervisionResult.contains("是否通过: FAIL")) {
+        if (supervisionResult == null || supervisionResult.contains("是否通过: FAIL") || supervisionResult.contains("**是否通过:** FAIL")) {
             log.info("❌ 质量检查未通过，需要重新执行");
             dynamicContext.setCurrentTask("根据质量监督的建议重新执行任务");
-        } else if (supervisionResult.contains("是否通过: OPTIMIZE")) {
+        } else if (supervisionResult.contains("是否通过: OPTIMIZE") || supervisionResult.contains("**是否通过:** OPTIMIZE")) {
             log.info("🔧 质量检查建议优化，继续改进");
             dynamicContext.setCurrentTask("根据质量监督的建议优化执行结果");
         } else {
@@ -176,7 +174,7 @@ public class Step3QualitySupervisorNode extends AbstractExecuteSupport {
                 sectionContent.setLength(0);
                 String score = line.substring(line.indexOf(":") + 1).trim();
                 log.info("\n📊 质量评分: {}", score);
-                sectionContent.append(score);
+                sectionContent.append(line);
                 continue;
             } else if (line.contains("是否通过:")) {
                 // 发送前一个部分的内容
@@ -191,7 +189,7 @@ public class Step3QualitySupervisorNode extends AbstractExecuteSupport {
                 } else {
                     log.info("\n🔧 检查结果: 需要优化");
                 }
-                sectionContent.append(status);
+                sectionContent.append(line);
                 continue;
             }
 

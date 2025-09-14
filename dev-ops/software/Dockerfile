@@ -12,6 +12,6 @@ ENV TZ=PRC
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 # 添加应用
-ADD ./ai-agent-station-app.jar /ai-agent-station-app.jar
+ADD ./ai-agent-station-app.jar app.jar
 
-ENTRYPOINT ["sh","-c","java -jar $JAVA_OPTS /ai-agent-station-app.jar $PARAMS"]
+ENTRYPOINT ["sh","-c","java -jar $JAVA_OPTS app.jar $PARAMS"]

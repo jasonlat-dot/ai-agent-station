@@ -1,0 +1,68 @@
+{
+  "name": "vue3",
+  "version": "0.0.0",
+  "private": true,
+  "engines": {
+    "node": "^20.19.0 || >=22.12.0"
+  },
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "dev": "vue-cli-service serve --mode development",
+    "build": "vue-cli-service build --mode production",
+    "build:dev": "vue-cli-service build --mode development",
+    "preview": "vue-cli-service serve --mode production",
+    "lint": "echo 'ESLint is disabled'",
+    "docker:build": "docker build -f ../software/Dockerfile -t ai-agent-station-frontend .",
+    "docker:run": "docker run -p 80:80 ai-agent-station-frontend"
+  },
+  "dependencies": {
+    "@element-plus/icons-vue": "^2.3.2",
+    "axios": "^1.12.1",
+    "dompurify": "^3.2.6",
+    "element-plus": "^2.11.2",
+    "highlight.js": "^11.11.1",
+    "marked": "^16.2.1",
+    "core-js": "^3.8.3",
+    "katex": "^0.16.22",
+    "sharp": "^0.34.3",
+    "uuid": "^11.1.0",
+    "vue": "^3.2.13",
+    "vue-router": "^4.5.1",
+    "vuex": "^4.1.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.16",
+    "@babel/eslint-parser": "^7.12.16",
+    "@vue/cli-plugin-babel": "~5.0.0",
+    "@vue/cli-plugin-eslint": "~5.0.0",
+    "@vue/cli-service": "~5.0.0",
+    "eslint": "^7.32.0",
+    "eslint-plugin-vue": "^8.0.3"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/vue3-essential",
+      "eslint:recommended"
+    ],
+    "parserOptions": {
+      "parser": "@babel/eslint-parser"
+    },
+    "rules": {
+      "no-unused-vars": "off",
+      "no-console": "off",
+      "no-debugger": "off",
+      "vue/no-unused-vars": "off",
+      "vue/no-unused-components": "off"
+    }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "not ie 11"
+  ]
+}

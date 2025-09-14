@@ -34,7 +34,7 @@ spring:
   datasource:
     # mysql
     mysql:
-      url: jdbc:mysql://127.0.0.1:13306/ai-agent-station?useUnicode=true&characterEncoding=utf8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&serverTimezone=UTC&useSSL=false
+      url: jdbc:mysql://192.168.3.16:13306/ai-agent-station?useUnicode=true&characterEncoding=utf8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&serverTimezone=UTC&useSSL=false
       username: root
       password: lijiaqiang12@
       driver-class-name: com.mysql.cj.jdbc.Driver
@@ -51,7 +51,7 @@ spring:
     pgvector:
       username: jasonlat
       password: lijiaqiang12@
-      url: jdbc:postgresql://127.0.0.1:15432/postgres
+      url: jdbc:postgresql://192.168.3.16:15432/postgres
       driver-class-name: org.postgresql.Driver
       hikari:
         pool-name: PgVector_Retail_HikariCP
@@ -72,7 +72,7 @@ spring:
         options:
           model: qwen-flash-2025-07-28
     ollama:
-      base-url: http://127.0.0.1:11434
+      base-url: http://192.168.3.16:11434
       chat:
         options:
           model: qwen3:14B
@@ -103,8 +103,8 @@ spring:
 
   # Spring 配置；rabbitmq
   rabbitmq:
-    addresses: 127.0.0.1
-    port: 15432
+    addresses: 192.168.3.16
+    port: 5672
     username: jasonlat
     password: lijiaqiang12@
     listener:
@@ -117,7 +117,7 @@ jq1024:
   cc:
     # redisson 配置
     redisson:
-      host: 127.0.0.1
+      host: 192.168.3.16
       port: 16379
       password: lijiaqiang12@
       database: 0

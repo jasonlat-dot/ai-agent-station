@@ -63,6 +63,7 @@ public class Step2PrecisionExecutorNode extends AbstractExecuteSupport{
         AiAgentClientFlowConfigVO aiAgentClientFlowConfigVO = dynamicContext.getAiAgentClientFlowConfigVOMap().get(AiClientTypeEnumVO.PRECISION_EXECUTOR_CLIENT.getCode());
         log.info("AiAgentClientFlowConfigVO INFO: {}", JSON.toJSONString(aiAgentClientFlowConfigVO));
         ChatClient chatClient = getChatClientByClientId(aiAgentClientFlowConfigVO.getClientId());
+
         String executionResult = chatClient
                 .prompt(executionPrompt)
                 .advisors(a -> a

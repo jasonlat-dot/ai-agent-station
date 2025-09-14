@@ -8,6 +8,7 @@ import com.jasonlat.domain.agent.model.valobj.enums.AiClientTypeEnumVO;
 import com.jasonlat.domain.agent.service.execute.auto.step.factory.DefaultAutoAgentExecuteStrategyFactory;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
 
 /**
  * @author jasonlat
@@ -105,7 +106,7 @@ public class Step4LogExecutionSummaryNode extends AbstractExecuteSupport {
                             .param(CHAT_MEMORY_RETRIEVE_SIZE_KEY, 50))
                     .call().content();
 
-            assert summaryResult != null;
+
             logFinalReport(dynamicContext, summaryResult, requestParameter.getSessionId());
 
             // 将总结结果保存到动态上下文中
@@ -168,6 +169,10 @@ public class Step4LogExecutionSummaryNode extends AbstractExecuteSupport {
     private void logFinalReport(DefaultAutoAgentExecuteStrategyFactory.DynamicContext dynamicContext, String summaryResult, String sessionId) {
         boolean isCompleted = dynamicContext.isCompleted();
         log.info("\n📋 === {}任务最终总结报告 ===", isCompleted ? "已完成" : "未完成");
+        if (summaryResult == null || summaryResult.isEmpty()) {
+            log.warn("summaryResult is empty, 没有最终总结报告输出");
+            return;
+        }
 
         String[] lines = summaryResult.split("\n");
         String currentSection = "summary_overview";

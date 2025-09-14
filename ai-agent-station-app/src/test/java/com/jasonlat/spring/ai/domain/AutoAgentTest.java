@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyEmitter;
 
 import java.util.Arrays;
 
@@ -57,7 +58,7 @@ public class AutoAgentTest {
         executeCommandEntity.setSessionId("session-id-" + System.currentTimeMillis());
         executeCommandEntity.setMaxStep(3);
 
-        String execute = autoExecuteStrategy.execute(executeCommandEntity);
+        String execute = autoExecuteStrategy.execute(executeCommandEntity, new ResponseBodyEmitter());
         log.info("测试结果:{}", execute);
     }
 

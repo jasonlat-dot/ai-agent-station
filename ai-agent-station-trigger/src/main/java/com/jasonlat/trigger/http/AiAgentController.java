@@ -8,6 +8,7 @@ import com.jasonlat.domain.agent.service.execute.IExecuteStrategy;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyEmitter;
 
@@ -37,7 +38,7 @@ public class AiAgentController implements IAiAgentService {
      */
     @Override
     @RequestMapping(value = "auto_agent", method = RequestMethod.POST)
-    public ResponseBodyEmitter autoAgent(@RequestBody AutoAgentRequestDTO request, HttpServletResponse response) {
+    public ResponseBodyEmitter autoAgent(@Validated @RequestBody AutoAgentRequestDTO request, HttpServletResponse response) {
         log.info("AutoAgent流式执行请求开始，请求信息：{}", JSON.toJSONString(request));
 
         try {

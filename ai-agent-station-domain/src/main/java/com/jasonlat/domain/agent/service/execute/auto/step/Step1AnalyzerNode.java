@@ -9,6 +9,7 @@ import com.jasonlat.domain.agent.model.valobj.enums.AiClientTypeEnumVO;
 import com.jasonlat.domain.agent.service.execute.auto.step.factory.DefaultAutoAgentExecuteStrategyFactory;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
 
 /**
  * @author jasonlat
@@ -71,13 +72,14 @@ public class Step1AnalyzerNode extends AbstractExecuteSupport {
         ChatClient chatClient = getChatClientByClientId(aiAgentClientFlowConfigVO.getClientId());
 
         // 分析用户需求，获取分析结果
+        log.info("🎯 分析用户需求 begin");
         String analysisResult = chatClient
                 .prompt(analysisPrompt)
                 .advisors(a -> a
                         .param(CHAT_MEMORY_CONVERSATION_ID_KEY, requestParameter.getSessionId())
                         .param(CHAT_MEMORY_RETRIEVE_SIZE_KEY, 1024))
                 .call().content();
-
+       log.info("🎯 分析用户需求 end");
         // 解析分析结果
         parseAnalysisResult(dynamicContext, analysisResult, requestParameter.getSessionId());
 
@@ -85,7 +87,8 @@ public class Step1AnalyzerNode extends AbstractExecuteSupport {
         dynamicContext.setValue("analysisResult", analysisResult);
 
         // 检查是否已完成
-        if ( analysisResult != null && (analysisResult.contains("任务状态: COMPLETED") || analysisResult.contains("完成度评估: 100%"))) {
+        if (analysisResult != null && (analysisResult.contains("**任务状态:** COMPLETED")
+                 || analysisResult.contains("**完成度评估:** 100%"))) {
             dynamicContext.setCompleted(true);
             log.info("✅ 任务分析显示已完成！");
             return router(requestParameter, dynamicContext);
