@@ -503,6 +503,7 @@ public class AgentRepository implements IAgentRepository {
                             .clientName(flowConfig.getClientName())
                             .clientType(flowConfig.getClientType())
                             .sequence(flowConfig.getSequence())
+                            .stepPrompt(flowConfig.getStepPrompt())
                             .build())
                     .collect(Collectors.toMap(
                             AiAgentClientFlowConfigVO::getClientType,  // key: ClientType

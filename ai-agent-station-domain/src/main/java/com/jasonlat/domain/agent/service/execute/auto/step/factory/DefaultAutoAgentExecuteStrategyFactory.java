@@ -54,7 +54,7 @@ public class DefaultAutoAgentExecuteStrategyFactory {
         boolean isCompleted = false;
 
         // AI 配置信息
-        private Map<String, AiAgentClientFlowConfigVO> aiAgentClientFlowConfigVOMap;
+        private Map<String, AiAgentClientFlowConfigVO> aiAgentClientFlowConfigVOMap = new HashMap<>();
 
         private Map<String, Object> dataObjects = new HashMap<>();
 

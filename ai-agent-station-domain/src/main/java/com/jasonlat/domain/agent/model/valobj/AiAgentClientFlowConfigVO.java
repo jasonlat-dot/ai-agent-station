@@ -35,4 +35,9 @@ public class AiAgentClientFlowConfigVO {
      */
     private Integer sequence;
 
+    /**
+     * 执行步骤提示词
+     */
+    private String stepPrompt;
+
 }

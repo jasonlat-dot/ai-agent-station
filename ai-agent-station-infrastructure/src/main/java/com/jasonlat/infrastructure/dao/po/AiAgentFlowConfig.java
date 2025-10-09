@@ -64,6 +64,12 @@ public class AiAgentFlowConfig implements Serializable {
     private Integer sequence;
 
     /**
+     * 执行步骤提示词
+     */
+    @TableField("step_prompt")
+    private String stepPrompt;
+
+    /**
      * 创建时间
      */
     @TableField("create_time")
