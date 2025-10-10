@@ -18,19 +18,19 @@
     <module>ai-agent-station-types</module>
   </modules>
 
-  <repositories>
-    <repository>
-      <id>nexus-aliyun</id>
-      <name>nexus-aliyun</name>
-      <url>https://maven.aliyun.com/nexus/content/groups/public/</url>
-      <releases>
-        <enabled>true</enabled>
-      </releases>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-    </repository>
-  </repositories>
+<!--  <repositories>-->
+<!--    <repository>-->
+<!--      <id>nexus-aliyun</id>-->
+<!--      <name>nexus-aliyun</name>-->
+<!--      <url>https://maven.aliyun.com/nexus/content/groups/public/</url>-->
+<!--      <releases>-->
+<!--        <enabled>true</enabled>-->
+<!--      </releases>-->
+<!--      <snapshots>-->
+<!--        <enabled>false</enabled>-->
+<!--      </snapshots>-->
+<!--    </repository>-->
+<!--  </repositories>-->
 
   <properties>
     <java.version>17</java.version>

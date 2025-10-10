@@ -50,6 +50,10 @@ public class OpenAiTest {
     @Value("classpath:data/article-prompt-words.txt")
     private Resource articlePromptWordsResource;
 
+    @Value("classpath:data/grafana-mcp-tools-guide.md")
+    private Resource grafanaMcpToolsGuideResource;
+
+
     @Autowired
     private OpenAiChatModel openAiChatModel;
 
@@ -115,12 +119,12 @@ public class OpenAiTest {
     @Test
     public void upload() {
         // textResource、articlePromptWordsResource
-        TikaDocumentReader reader = new TikaDocumentReader(textResource);
+        TikaDocumentReader reader = new TikaDocumentReader(grafanaMcpToolsGuideResource);
 
         List<Document> documents = reader.get();
         List<Document> documentSplitterList = tokenTextSplitter.apply(documents);
 
-        documentSplitterList.forEach(doc -> doc.getMetadata().put("knowledge", "test-file"));
+        documentSplitterList.forEach(doc -> doc.getMetadata().put("knowledge", "grafana-mcp-tools-guide"));
 
         pgVectorStore.accept(documentSplitterList);
 
@@ -129,7 +133,7 @@ public class OpenAiTest {
 
     @Test
     public void chat() {
-        String message = "王大瓜今年几岁";
+        String message = "Grafana MCP 工具使用指南";
 
         String SYSTEM_PROMPT = """
                 Use the information from the DOCUMENTS section to provide accurate answers but act as if you knew this information innately.
@@ -142,7 +146,7 @@ public class OpenAiTest {
         SearchRequest request = SearchRequest.builder()
                 .query(message)
                 .topK(5)
-                .filterExpression("knowledge == 'test-file'")
+                .filterExpression("knowledge == 'grafana-mcp-tools-guide'")
                 .build();
 
         List<Document> documents = pgVectorStore.similaritySearch(request);

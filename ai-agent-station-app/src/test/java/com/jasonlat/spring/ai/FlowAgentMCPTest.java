@@ -6,6 +6,7 @@ import io.modelcontextprotocol.client.McpSyncClient;
 import io.modelcontextprotocol.client.transport.HttpClientSseClientTransport;
 import io.modelcontextprotocol.client.transport.ServerParameters;
 import io.modelcontextprotocol.client.transport.StdioClientTransport;
+import io.modelcontextprotocol.spec.McpClientTransport;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,8 +18,15 @@ import org.springframework.ai.openai.OpenAiChatModel;
 import org.springframework.ai.openai.OpenAiChatOptions;
 import org.springframework.ai.openai.api.OpenAiApi;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.messaging.tcp.TcpConnection;
+import org.springframework.messaging.tcp.reactor.ReactorNetty2TcpConnection;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.Socket;
+import java.net.URI;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
@@ -42,12 +50,40 @@ public class FlowAgentMCPTest {
                         .build())
                 .defaultOptions(OpenAiChatOptions.builder()
                         .model("GLM-4.5-Flash")
-                        .toolCallbacks(new SyncMcpToolCallbackProvider(stdioMcpClientElasticsearch()).getToolCallbacks())
+                        .toolCallbacks(new SyncMcpToolCallbackProvider(stdioMcpClient_Grafana()).getToolCallbacks())
                         .build())
                 .build();
 
         ChatResponse call = chatModel.call(Prompt.builder().messages(new UserMessage("有哪些工具可以使用")).build());
         log.info("测试结果:{}", JSON.toJSONString(call.getResult()));
+    }
+
+    public McpSyncClient stdioMcpClient_Grafana() {
+        Map<String, String> env = new HashMap<>();
+        env.put("GRAFANA_URL", "http://192.168.3.16:9200");
+        env.put("GRAFANA_API_KEY", "glsa_ugw5dE4evffOi6MJZgaElWDBAEURwxeV_08b857ff");
+
+        var stdioParams = ServerParameters.builder("docker")
+                .args("run",
+                        "--rm",
+                        "-i",
+                        "-e",
+                        "GRAFANA_URL",
+                        "-e",
+                        "GRAFANA_API_KEY",
+                        "mcp/grafana",
+                        "-t",
+                        "stdio")
+                .env(env)
+                .build();
+
+        var mcpClient = McpClient.sync(new StdioClientTransport(stdioParams))
+                .requestTimeout(Duration.ofSeconds(100)).build();
+
+        var init = mcpClient.initialize();
+        log.info("Stdio MCP Initialized: {}", init);
+
+        return mcpClient;
     }
 
     /**
@@ -57,7 +93,7 @@ public class FlowAgentMCPTest {
      */
     public McpSyncClient stdioMcpClientElasticsearch() {
         Map<String, String> env = new HashMap<>();
-        env.put("ES_HOST", "http://192.168.1.110:9200");
+        env.put("ES_HOST", "http://192.168.3.16:9200");
         env.put("ES_API_KEY", "none");
 
         var stdioParams = ServerParameters.builder("C:\\\\Users\\\\Administrator\\\\AppData\\\\Roaming\\\\npm\\\\npx.cmd")
@@ -90,7 +126,7 @@ public class FlowAgentMCPTest {
 
     public McpSyncClient sseMcpClient_csdn() {
 
-        HttpClientSseClientTransport sseClientTransport = HttpClientSseClientTransport.builder("http://192.168.1.108:8102").build();
+        HttpClientSseClientTransport sseClientTransport = HttpClientSseClientTransport.builder("http://192.168.3.16:8102").build();
 
         McpSyncClient mcpSyncClient = McpClient.sync(sseClientTransport).requestTimeout(Duration.ofMinutes(180)).build();
 
@@ -102,7 +138,7 @@ public class FlowAgentMCPTest {
 
     public McpSyncClient sseMcpClient02_weixin() {
 
-        HttpClientSseClientTransport sseClientTransport = HttpClientSseClientTransport.builder("http://192.168.1.108:8101").build();
+        HttpClientSseClientTransport sseClientTransport = HttpClientSseClientTransport.builder("http://192.168.3.16:8101").build();
 
         McpSyncClient mcpSyncClient = McpClient.sync(sseClientTransport).requestTimeout(Duration.ofMinutes(180)).build();
 
